@@ -621,8 +621,17 @@ p {
 
 /* ===== Safari/微信浏览器兼容性修复 ===== */
 
+/* Safari 基础修复 */
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* Safari flexbox 修复 */
-.safari-compat .paywall-card {
+.safari-compat .paywall-card,
+_::-webkit-full-page-media,
+_:future,
+:root .paywall-card {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -632,15 +641,32 @@ p {
     flex-direction: column;
 }
 
+/* Safari 100vh 修复 */
+@supports (-webkit-touch-callout: none) {
+    .paywall-overlay {
+        height: -webkit-fill-available;
+    }
+    
+    .paywall-card {
+        max-height: -webkit-fill-available;
+    }
+}
+
 /* 微信浏览器输入框修复 */
-.safari-compat .order-input-group input {
+.safari-compat .order-input-group input,
+_::-webkit-full-page-media,
+_:future,
+:root .order-input-group input {
     -webkit-user-select: text;
     user-select: text;
     -webkit-touch-callout: default;
 }
 
 /* Safari 滚动修复 */
-.safari-compat .paywall-overlay {
+.safari-compat .paywall-overlay,
+_::-webkit-full-page-media,
+_:future,
+:root .paywall-overlay {
     -webkit-overflow-scrolling: touch;
 }
 

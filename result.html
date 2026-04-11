@@ -2,7 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>测试结果 - 心理测试</title>
     <link rel="stylesheet" href="css/style.css">
     <!-- 预加载关键资源 -->
@@ -2088,30 +2091,45 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            applyUIConfig();
-            initPaywallTabs();
+        // Safari 兼容性：确保 DOM 加载完成后再执行
+        function initApp() {
+            try {
+                applyUIConfig();
+                initPaywallTabs();
 
-            // URL参数重置付费状态（方便调试）
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('reset') === '1') {
-                localStorage.removeItem('payment_order_number');
-                localStorage.removeItem('payment_time');
-                localStorage.removeItem('used_order_numbers');
-                // 清理URL中的reset参数
-                window.history.replaceState({}, '', window.location.pathname);
-            }
+                // URL参数重置付费状态（方便调试）
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('reset') === '1') {
+                    localStorage.removeItem('payment_order_number');
+                    localStorage.removeItem('payment_time');
+                    localStorage.removeItem('used_order_numbers');
+                    // 清理URL中的reset参数
+                    window.history.replaceState({}, '', window.location.pathname);
+                }
 
-            // 检查付费状态
-            if (checkPaymentStatus()) {
-                // 已付费，直接展示结果
+                // 检查付费状态
+                if (checkPaymentStatus()) {
+                    // 已付费，直接展示结果
+                    document.getElementById('result-main-content').style.display = 'block';
+                    initializeResults();
+                } else {
+                    // 未付费，展示付费墙
+                    showPaywall();
+                }
+            } catch (error) {
+                console.error('初始化错误:', error);
+                // 如果出错，至少显示内容
                 document.getElementById('result-main-content').style.display = 'block';
-                initializeResults();
-            } else {
-                // 未付费，展示付费墙
-                showPaywall();
             }
-        });
+        }
+
+        // 多种方式确保初始化执行
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            // DOM 已经加载完成
+            initApp();
+        }
     </script>
 </body>
 </html>
