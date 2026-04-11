@@ -832,7 +832,9 @@ p {
     display: flex;
     gap: 12px;
     margin-bottom: 8px;
-    margin-top: auto;
+    margin-top: 16px;
+    position: relative;
+    z-index: 10;
 }
 
 .order-input-group input {
@@ -844,6 +846,10 @@ p {
     font-family: inherit;
     outline: none;
     transition: var(--transition);
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 .order-input-group input:focus {
@@ -882,17 +888,16 @@ p {
         border-radius: 0;
         max-height: 100vh;
         min-height: 100vh;
-        height: 100vh; /* Safari fix */
-        display: -webkit-flex; /* Safari prefix */
-        display: flex;
-        -webkit-flex-direction: column; /* Safari prefix */
-        flex-direction: column;
+        height: auto; /* 改为auto而不是100vh */
+        min-height: -webkit-fill-available;
+        display: block; /* 改为block而不是flex */
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         position: relative;
-        -webkit-box-sizing: border-box; /* Safari prefix */
+        -webkit-box-sizing: border-box;
         box-sizing: border-box;
+        padding-bottom: 40px; /* 底部留出空间 */
     }
     .paywall-icon {
         font-size: 2.5rem;
@@ -935,16 +940,23 @@ p {
         line-height: 1.6;
     }
     .order-input-group {
-        margin-top: auto;
+        margin-top: 16px;
         margin-bottom: 20px;
         position: relative;
-        z-index: 10;
+        z-index: 100;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
     }
     .order-input-group input {
-        font-size: 0.9rem;
-        padding: 10px 14px;
+        font-size: 16px; /* 防止iOS缩放 */
+        padding: 12px 16px;
         -webkit-appearance: none;
         appearance: none;
+        -webkit-user-select: text;
+        user-select: text;
+        -webkit-touch-callout: default;
         touch-action: manipulation;
+        position: relative;
+        z-index: 101;
     }
 }
