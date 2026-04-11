@@ -619,6 +619,50 @@ p {
     margin-bottom: 16px;
 }
 
+/* ===== Safari/微信浏览器兼容性修复 ===== */
+
+/* Safari flexbox 修复 */
+.safari-compat .paywall-card {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+/* 微信浏览器输入框修复 */
+.safari-compat .order-input-group input {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+}
+
+/* Safari 滚动修复 */
+.safari-compat .paywall-overlay {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 微信浏览器 fixed 定位修复 */
+@supports (-webkit-touch-callout: none) {
+    .paywall-overlay {
+        /* iOS 设备特殊处理 */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .paywall-card {
+        max-height: -webkit-fill-available;
+        max-height: fill-available;
+    }
+}
+
 /* ===== 付费墙样式 ===== */
 .paywall-overlay {
     position: fixed;
@@ -643,9 +687,11 @@ p {
     box-shadow: 0 8px 40px rgba(255, 140, 148, 0.2);
     text-align: center;
     max-height: 90vh;
+    height: auto; /* Safari fix */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    position: relative; /* Safari fix */
 }
 
 .paywall-icon {
@@ -829,16 +875,24 @@ p {
     .paywall-overlay {
         padding: 0;
         align-items: flex-start;
+        -webkit-align-items: flex-start; /* Safari prefix */
     }
     .paywall-card {
         padding: 20px 16px;
         border-radius: 0;
         max-height: 100vh;
         min-height: 100vh;
+        height: 100vh; /* Safari fix */
+        display: -webkit-flex; /* Safari prefix */
         display: flex;
+        -webkit-flex-direction: column; /* Safari prefix */
         flex-direction: column;
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
+        position: relative;
+        -webkit-box-sizing: border-box; /* Safari prefix */
+        box-sizing: border-box;
     }
     .paywall-icon {
         font-size: 2.5rem;

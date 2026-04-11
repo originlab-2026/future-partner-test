@@ -8,11 +8,11 @@
     <!-- 预加载关键资源 -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <!-- 异步加载非关键脚本 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <!-- 同步加载关键脚本（Safari兼容性） -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         /* 烟花特效样式 */
         .firework {
@@ -1350,6 +1350,15 @@
                     ${persona.deepAnalysis}
                 </div>
             `;
+        }
+
+        // 浏览器检测和兼容性处理
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const isWechat = /MicroMessenger/i.test(navigator.userAgent);
+        
+        if (isSafari || isWechat) {
+            console.log('检测到 Safari/微信浏览器，启用兼容性模式');
+            document.documentElement.classList.add('safari-compat');
         }
 
         // 根据当前域名自动判断部署平台
