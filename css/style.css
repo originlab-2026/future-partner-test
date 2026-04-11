@@ -837,6 +837,8 @@ p {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .paywall-icon {
         font-size: 2.5rem;
@@ -881,9 +883,14 @@ p {
     .order-input-group {
         margin-top: auto;
         margin-bottom: 20px;
+        position: relative;
+        z-index: 10;
     }
     .order-input-group input {
         font-size: 0.9rem;
         padding: 10px 14px;
+        -webkit-appearance: none;
+        appearance: none;
+        touch-action: manipulation;
     }
 }
