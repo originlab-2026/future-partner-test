@@ -137,7 +137,15 @@
         async function loadQuizData() {
             try {
                 quizData = StorageUtil.get(StorageKeys.QUIZ_DATA);
-                
+
+                // 与「爱的解码」等共用 localStorage 时，缓存题库可能不是本测试，会导致 question_id 对不上、永远提示有题未作答
+                if (quizData && !isFuturePartnerQuizData(quizData)) {
+                    console.warn('检测到非「未来伴侣」题库缓存，已清空题库与答题进度');
+                    StorageUtil.remove(StorageKeys.QUIZ_DATA);
+                    StorageUtil.clearQuizProgress();
+                    quizData = null;
+                }
+
                 // 检查 localStorage 数据是否有效
                 if (quizData && (!quizData.scale_questions || !quizData.choice_questions)) {
                     console.warn('localStorage 数据损坏，清除后重新加载');
@@ -187,10 +195,11 @@
 
                 // 恢复进度
                 const savedIndex = StorageUtil.get(StorageKeys.CURRENT_QUESTION, 0);
-                const savedAnswers = StorageUtil.get(StorageKeys.USER_ANSWERS, {});
+                let savedAnswers = StorageUtil.get(StorageKeys.USER_ANSWERS, {});
                 const savedOptionOrder = StorageUtil.get('question_option_order', {});
                 currentQuestionIndex = Math.min(savedIndex, allQuestions.length - 1);
                 answers = savedAnswers && typeof savedAnswers === 'object' ? savedAnswers : {};
+                answers = pruneUserAnswersForQuiz(answers, quizData);
                 questionOptionOrder = savedOptionOrder;
                 normalizeStoredAnswers();
                 saveProgress();
@@ -488,7 +497,8 @@
         document.getElementById('submit-btn').addEventListener('click', () => {
             const unanswered = allQuestions.filter(q => !isQuestionAnswered(q));
             if (unanswered.length > 0) {
-                alert(`还有 ${unanswered.length} 题未作答，请完成所有题目后再提交`);
+                const sample = unanswered.slice(0, 5).map(q => q.question_id).join(', ');
+                alert(`还有 ${unanswered.length} 题未作答，请完成所有题目后再提交。\n未作答示例 ID：${sample}${unanswered.length > 5 ? '…' : ''}`);
                 return;
             }
 

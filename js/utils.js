@@ -9,16 +9,77 @@ const StorageKeys = {
     CURRENT_QUESTION: 'current_question',
     QUIZ_CONFIG: 'quiz_config',
     UI_CONFIG: 'ui_config',
-    GENDER: 'user_gender'
+    GENDER: 'user_gender',
+    PAYMENT_ORDER_NUMBER: 'payment_order_number',
+    PAYMENT_TIME: 'payment_time',
+    USED_ORDER_NUMBERS: 'used_order_numbers'
 };
+
+/** 与 default-quiz.json 一致；用于与「爱的解码」等共用 localStorage 时避免串题 */
+const FUTURE_PARTNER_QUIZ_ID = 'future-partner';
+const FUTURE_PARTNER_QUIZ_NAME = '你未来对象是什么类型';
+const STORAGE_NAMESPACE = 'future_partner_test';
+const LEGACY_STORAGE_KEYS = new Set([
+    StorageKeys.QUIZ_DATA,
+    StorageKeys.USER_ANSWERS,
+    StorageKeys.CURRENT_QUESTION,
+    StorageKeys.QUIZ_CONFIG,
+    StorageKeys.UI_CONFIG,
+    StorageKeys.GENDER,
+    StorageKeys.PAYMENT_ORDER_NUMBER,
+    StorageKeys.PAYMENT_TIME,
+    StorageKeys.USED_ORDER_NUMBERS,
+    'question_option_order'
+]);
+
+/**
+ * 判断 localStorage 中的题库是否属于「未来伴侣」测试
+ */
+function isFuturePartnerQuizData(quizData) {
+    if (!quizData || !quizData.scale_questions || !quizData.choice_questions) return false;
+    if (quizData.quiz_id === FUTURE_PARTNER_QUIZ_ID) return true;
+    if (!quizData.quiz_id && quizData.quiz_name === FUTURE_PARTNER_QUIZ_NAME) return true;
+    return false;
+}
+
+/**
+ * 只保留当前题库中存在的 question_id，去掉其它测试遗留的答案键
+ */
+function pruneUserAnswersForQuiz(answers, quizData) {
+    if (!answers || typeof answers !== 'object' || !quizData) return {};
+    const ids = new Set([
+        ...(quizData.scale_questions || []).map(q => q.question_id),
+        ...(quizData.choice_questions || []).map(q => q.question_id)
+    ]);
+    const pruned = {};
+    Object.keys(answers).forEach((k) => {
+        if (ids.has(k)) pruned[k] = answers[k];
+    });
+    return pruned;
+}
 
 /**
  * LocalStorage 工具类
  */
 class StorageUtil {
+    static getScopedKey(key) {
+        return `${STORAGE_NAMESPACE}:${String(key)}`;
+    }
+
+    /** 兼容旧版直接写入的纯文本（如 ISO 时间串）与 JSON 序列化值 */
+    static parseStoredValue(raw) {
+        if (raw === null || raw === undefined) return null;
+        if (raw === '') return '';
+        try {
+            return JSON.parse(raw);
+        } catch (e) {
+            return raw;
+        }
+    }
+
     static set(key, value) {
         try {
-            localStorage.setItem(key, JSON.stringify(value));
+            localStorage.setItem(this.getScopedKey(key), JSON.stringify(value));
             return true;
         } catch (e) {
             console.error('Storage set error:', e);
@@ -28,8 +89,25 @@ class StorageUtil {
 
     static get(key, defaultValue = null) {
         try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : defaultValue;
+            const scopedKey = this.getScopedKey(key);
+            const scopedItem = localStorage.getItem(scopedKey);
+            if (scopedItem !== null) {
+                return this.parseStoredValue(scopedItem);
+            }
+
+            const legacyItem = localStorage.getItem(key);
+            if (legacyItem !== null) {
+                const parsed = this.parseStoredValue(legacyItem);
+                try {
+                    localStorage.setItem(scopedKey, JSON.stringify(parsed));
+                } catch (e) {
+                    /* no-op */
+                }
+                localStorage.removeItem(key);
+                return parsed;
+            }
+
+            return defaultValue;
         } catch (e) {
             console.error('Storage get error:', e);
             return defaultValue;
@@ -37,11 +115,20 @@ class StorageUtil {
     }
 
     static remove(key) {
+        localStorage.removeItem(this.getScopedKey(key));
         localStorage.removeItem(key);
     }
 
     static clear() {
-        localStorage.clear();
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i += 1) {
+            const key = localStorage.key(i);
+            if (!key) continue;
+            if (key.startsWith(`${STORAGE_NAMESPACE}:`) || LEGACY_STORAGE_KEYS.has(key)) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach((key) => localStorage.removeItem(key));
     }
 
     static clearQuizProgress() {
@@ -348,5 +435,17 @@ function applyUIConfig(config = null) {
 
 // 导出
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { StorageKeys, StorageUtil, QuizValidator, Utils, DefaultUIConfig, getUIConfig, applyUIConfig };
+    module.exports = {
+        StorageKeys,
+        StorageUtil,
+        QuizValidator,
+        Utils,
+        DefaultUIConfig,
+        getUIConfig,
+        applyUIConfig,
+        FUTURE_PARTNER_QUIZ_ID,
+        FUTURE_PARTNER_QUIZ_NAME,
+        isFuturePartnerQuizData,
+        pruneUserAnswersForQuiz
+    };
 }

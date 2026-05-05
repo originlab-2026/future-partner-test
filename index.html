@@ -209,7 +209,14 @@
             try {
                 // 先检查 localStorage 中是否有自定义测试数据
                 let quizData = StorageUtil.get(StorageKeys.QUIZ_DATA);
-                
+
+                if (quizData && !isFuturePartnerQuizData(quizData)) {
+                    console.warn('首页：检测到非「未来伴侣」题库缓存，已清空题库与答题进度');
+                    StorageUtil.remove(StorageKeys.QUIZ_DATA);
+                    StorageUtil.clearQuizProgress();
+                    quizData = null;
+                }
+
                 // 检查 localStorage 数据是否有效
                 if (quizData && (!quizData.scale_questions || !quizData.choice_questions)) {
                     console.warn('localStorage 数据不完整，清除后重新加载');
