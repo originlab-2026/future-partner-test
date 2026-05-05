@@ -1,234 +1,322 @@
 {
-  "quiz_name": "爱的五种语言测试",
-  "reference": "Gary Chapman 的五种爱语理论",
+  "quiz_name": "你未来对象是什么类型",
+  "reference": "基于亲密关系心理学中的依恋风格、支配顺从倾向与社交偏好等理论",
   "nbr_question": 30,
   "nbr_question_scale": 25,
   "nbr_question_choice": 5,
   "nbr_dimension": 5,
+  "gender_enabled": true,
   "dimensions": [
     {
-      "dimension_id": "words_of_affirmation",
-      "dimension_name": "肯定的言词",
-      "description": "用语言表达爱和鼓励。对于这类人来说，一句真诚的赞美、鼓励的话语，比任何行动都更让他们感到被爱。"
+      "dimension_id": "A",
+      "dimension_name": "亲密陪伴的需求",
+      "description": "衡量你对伴侣陪伴、共处时间的渴望程度。高分者需要频繁的陪伴和相处，低分者更享受独处空间。"
     },
     {
-      "dimension_id": "quality_time",
-      "dimension_name": "精心的时刻",
-      "description": "重视一起度过的专注时间。对于这类人来说，伴侣全心全意的陪伴和倾听，是最能让他们感受到爱意的方式。"
+      "dimension_id": "B",
+      "dimension_name": "主动带节奏的偏好",
+      "description": "衡量你在关系中主导决策和推动互动的倾向。高分者喜欢掌控节奏，低分者偏好被动跟随。"
     },
     {
-      "dimension_id": "receiving_gifts",
-      "dimension_name": "接受礼物",
-      "description": "通过礼物感受被爱。对于这类人来说，礼物是爱的物证，精心挑选的礼物能让他们深深感受到被重视和关爱。"
+      "dimension_id": "C",
+      "dimension_name": "掌控和强势的接受度",
+      "description": "衡量你对伴侣支配行为的接受程度。高分者愿意被伴侣\"管着\"，低分者追求独立自主。"
     },
     {
-      "dimension_id": "acts_of_service",
-      "dimension_name": "服务的行动",
-      "description": "通过行动、帮助对方表达爱。对于这类人来说，伴侣主动分担事务、提供帮助，是最实际的爱意表达。"
+      "dimension_id": "D",
+      "dimension_name": "温柔照料的需求",
+      "description": "衡量你对伴侣温柔体贴、细心照顾的渴望程度。高分者渴望被照料，低分者倾向自我消化。"
     },
     {
-      "dimension_id": "physical_touch",
-      "dimension_name": "身体的接触",
-      "description": "通过拥抱、牵手等身体接触感受爱。对于这类人来说，身体接触是情感连接的重要方式，能给他们带来安全感和亲密感。"
+      "dimension_id": "E",
+      "dimension_name": "活力社交的偏好",
+      "description": "衡量你对共同外出活动和社交互动的偏好。高分者热爱一起外出玩乐，低分者更喜欢安静独处。"
     }
   ],
   "scale_questions": [
     {
-      "question_id": "scale_001",
-      "dimension_id": "words_of_affirmation",
-      "question_text": "如果有人注意到我换了新发型或穿了新衣服并随口夸奖，我会暗自高兴很久。"
+      "question_id": "scale_A01",
+      "dimension_id": "A",
+      "question_text": "我认为关系的质量取决于相处时间的多少。"
     },
     {
-      "question_id": "scale_002",
-      "dimension_id": "words_of_affirmation",
-      "question_text": "当我情绪低落时，一句鼓励的话比任何安慰都管用。"
+      "question_id": "scale_A02",
+      "dimension_id": "A",
+      "question_text": "我希望伴侣能经常陪我一起做日常小事。"
     },
     {
-      "question_id": "scale_003",
-      "dimension_id": "words_of_affirmation",
-      "question_text": "我喜欢被人用\"你最棒了\"、\"你真厉害\"这样的话鼓励。"
+      "question_id": "scale_A03",
+      "dimension_id": "A",
+      "question_text": "当伴侣忙碌无法陪我时，我会感到失落。"
     },
     {
-      "question_id": "scale_004",
-      "dimension_id": "words_of_affirmation",
-      "question_text": "做了让对方开心的事，如果对方明确表达感谢或欣赏，我会感到被爱。"
+      "question_id": "scale_A04",
+      "dimension_id": "A",
+      "question_text": "空闲时，我更喜欢和伴侣待在一起，而不是独自活动。"
     },
     {
-      "question_id": "scale_005",
-      "dimension_id": "words_of_affirmation",
-      "question_text": "当我犹豫不决时，有人对我说\"我相信你，你可以的\"会让我很有信心。"
+      "question_id": "scale_A05",
+      "dimension_id": "A",
+      "question_text": "我认为关系中保持一定的独处比频繁陪伴更重要。",
+      "reverse": true
     },
     {
-      "question_id": "scale_006",
-      "dimension_id": "quality_time",
-      "question_text": "当只有两个人安静相处时，我比在热闹人群中更能感受到幸福和舒适。"
+      "question_id": "scale_B01",
+      "dimension_id": "B",
+      "question_text": "约会时，我通常负责决定去哪里、做什么。"
     },
     {
-      "question_id": "scale_007",
-      "dimension_id": "quality_time",
-      "question_text": "我在和对方一起做日常小事（如买菜、逛超市）时，比独自做这些事情更感到幸福。"
+      "question_id": "scale_B02",
+      "dimension_id": "B",
+      "question_text": "在矛盾发生时，我会先提出解决方案。"
     },
     {
-      "question_id": "scale_008",
-      "dimension_id": "quality_time",
-      "question_text": "当我说话时，如果对方不专心倾听，我会感到不被重视，并难以继续说下去。"
+      "question_id": "scale_B03",
+      "dimension_id": "B",
+      "question_text": "如果伴侣比我更被动，我会感到不适。"
     },
     {
-      "question_id": "scale_009",
-      "dimension_id": "quality_time",
-      "question_text": "当我与对方独处、完全不受打扰时，我比平时更能感受到亲密和满足。"
+      "question_id": "scale_B04",
+      "dimension_id": "B",
+      "question_text": "在决策时，我更希望由我来把握方向。"
     },
     {
-      "question_id": "scale_010",
-      "dimension_id": "quality_time",
-      "question_text": "当有人主动询问我的一天并认真听我讲时，我比平时更能感受到亲密和关爱。"
+      "question_id": "scale_B05",
+      "dimension_id": "B",
+      "question_text": "我很少主导日常互动的频率和方式。",
+      "reverse": true
     },
     {
-      "question_id": "scale_011",
-      "dimension_id": "receiving_gifts",
-      "question_text": "比起口头承诺，一份实实在在的礼物更能让我感受到爱意。"
+      "question_id": "scale_C01",
+      "dimension_id": "C",
+      "question_text": "在意见不合时，我愿意顺从伴侣的想法。"
     },
     {
-      "question_id": "scale_012",
-      "dimension_id": "receiving_gifts",
-      "question_text": "如果有人记得我不经意提过想要的东西，并在某个日子送给我，我会感动很久。"
+      "question_id": "scale_C02",
+      "dimension_id": "C",
+      "question_text": "我不会因为伴侣要求我改变习惯而抗拒。"
     },
     {
-      "question_id": "scale_013",
-      "dimension_id": "receiving_gifts",
-      "question_text": "即使只是一束花、一盒巧克力，只要是用心准备的，我都会很开心。"
+      "question_id": "scale_C03",
+      "dimension_id": "C",
+      "question_text": "我认为被伴侣\"管着\"是一种被在乎的表现。"
     },
     {
-      "question_id": "scale_014",
-      "dimension_id": "receiving_gifts",
-      "question_text": "如果有人在我没期待的时候突然送我小礼物，会让我特别惊喜。"
+      "question_id": "scale_C04",
+      "dimension_id": "C",
+      "question_text": "我不介意伴侣对我的社交圈提出建议或限制。"
     },
     {
-      "question_id": "scale_015",
-      "dimension_id": "receiving_gifts",
-      "question_text": "对我来说，礼物是爱的物证，看到它就会想起送礼物的人。"
+      "question_id": "scale_C05",
+      "dimension_id": "C",
+      "question_text": "如果伴侣安排我的生活，我会感到不适。",
+      "reverse": true
     },
     {
-      "question_id": "scale_016",
-      "dimension_id": "acts_of_service",
-      "question_text": "当我累了一天回家，看到有人帮我准备好饭菜时，我会感到心头一暖。"
+      "question_id": "scale_D01",
+      "dimension_id": "D",
+      "question_text": "我希望伴侣能在我疲惫时主动照顾我。"
     },
     {
-      "question_id": "scale_017",
-      "dimension_id": "acts_of_service",
-      "question_text": "比起甜言蜜语，主动帮我分担家务和工作，更让我觉得被爱着。"
+      "question_id": "scale_D02",
+      "dimension_id": "D",
+      "question_text": "当我生病时，伴侣的细心照料对我至关重要。"
     },
     {
-      "question_id": "scale_018",
-      "dimension_id": "acts_of_service",
-      "question_text": "如果有人在我开口之前察觉并帮忙，我会感到被理解和关心。"
+      "question_id": "scale_D03",
+      "dimension_id": "D",
+      "question_text": "我喜欢伴侣用温和的语气关心我的生活细节。"
     },
     {
-      "question_id": "scale_019",
-      "dimension_id": "acts_of_service",
-      "question_text": "在我生病或疲惫时，周到的照顾会让我感到被关心和珍惜。"
+      "question_id": "scale_D04",
+      "dimension_id": "D",
+      "question_text": "我希望对方能记住我的生活习惯并主动配合。"
     },
     {
-      "question_id": "scale_020",
-      "dimension_id": "acts_of_service",
-      "question_text": "我看重的是行动，而不是承诺——说得再好听，不如做给我看。"
+      "question_id": "scale_D05",
+      "dimension_id": "D",
+      "question_text": "情绪低落时，我更希望自己消化，而不是被安抚。",
+      "reverse": true
     },
     {
-      "question_id": "scale_021",
-      "dimension_id": "physical_touch",
-      "question_text": "我喜欢牵手、拥抱，这些身体接触让我感到安心。"
+      "question_id": "scale_E01",
+      "dimension_id": "E",
+      "question_text": "我更喜欢两人一起外出活动，而不是宅在家里。"
     },
     {
-      "question_id": "scale_022",
-      "dimension_id": "physical_touch",
-      "question_text": "如果一天没有亲密接触，我会觉得有所缺失。"
+      "question_id": "scale_E02",
+      "dimension_id": "E",
+      "question_text": "我认为共同的社交圈能增强关系稳定性。"
     },
     {
-      "question_id": "scale_023",
-      "dimension_id": "physical_touch",
-      "question_text": "当我难过时，一个拥抱比任何语言都更能安慰我。"
+      "question_id": "scale_E03",
+      "dimension_id": "E",
+      "question_text": "在关系中，我重视\"玩在一起\"的感觉。"
     },
     {
-      "question_id": "scale_024",
-      "dimension_id": "physical_touch",
-      "question_text": "走在路上时与某人挽手或搭肩，会让我感到亲密和安心。"
+      "question_id": "scale_E04",
+      "dimension_id": "E",
+      "question_text": "我喜欢和伴侣一起尝试新鲜有趣的娱乐活动。"
     },
     {
-      "question_id": "scale_025",
-      "dimension_id": "physical_touch",
-      "question_text": "即使只是拍拍肩、摸摸头这样的小动作，也能让我感到被爱。"
+      "question_id": "scale_E05",
+      "dimension_id": "E",
+      "question_text": "我并不喜欢和伴侣一起参加朋友聚会。",
+      "reverse": true
     }
   ],
   "choice_questions": [
     {
       "question_id": "choice_001",
-      "question_text": "以下哪种情境让你感到被爱和幸福？",
-      "option_a_text": "有人认真看着我说\"有你真好\"",
-      "option_a_dim": "words_of_affirmation",
-      "option_b_text": "有人放下手机，专心听我讲今天的事",
-      "option_b_dim": "quality_time",
-      "option_c_text": "有人顺手给我带了喜欢喝的奶茶",
-      "option_c_dim": "receiving_gifts",
-      "option_d_text": "有人帮我按摩酸痛的肩膀",
-      "option_d_dim": "acts_of_service",
-      "option_e_text": "有人看电视时自然地把脚搭在你腿上",
-      "option_e_dim": "physical_touch"
+      "question_text": "你最近工作压力很大，心情很低落。你会最希望伴侣：",
+      "option_a_text": "放下手头的事，安静地陪在你身边，等你愿意说的时候倾听",
+      "option_a_dim": "A",
+      "option_b_text": "主动帮你分析问题，告诉你接下来该怎么做",
+      "option_b_dim": "B",
+      "option_c_text": "直接帮你做一些决定（比如帮你请假、替你安排休息），让你不用操心",
+      "option_c_dim": "C",
+      "option_d_text": "用温柔的语气安慰你，给你准备热饮或帮你放松",
+      "option_d_dim": "D",
+      "option_e_text": "带你出去走走、吃顿好的或做点有趣的事，帮你转移注意力",
+      "option_e_dim": "E"
     },
     {
       "question_id": "choice_002",
-      "question_text": "当你生气或不开心时，哪种方式能让你感受到安抚和关爱？",
-      "option_a_text": "听到真诚的\"我错了，以后不会了\"",
-      "option_a_dim": "words_of_affirmation",
-      "option_b_text": "陪我做想做的事情，补偿我",
-      "option_b_dim": "quality_time",
-      "option_c_text": "买我喜欢的零食或礼物",
-      "option_c_dim": "receiving_gifts",
-      "option_d_text": "默默帮我搞定了一件麻烦事",
-      "option_d_dim": "acts_of_service",
-      "option_e_text": "轻轻抱抱我，直到我情绪平复",
-      "option_e_dim": "physical_touch"
+      "question_text": "你和伴侣的朋友们一起聚会，你更希望伴侣：",
+      "option_a_text": "时不时照顾你的感受，陪在你身边，不让你落单",
+      "option_a_dim": "A",
+      "option_b_text": "自然地带你融入大家，但由你来决定参与程度",
+      "option_b_dim": "B",
+      "option_c_text": "在需要的时候替你接话或帮你解围",
+      "option_c_dim": "C",
+      "option_d_text": "温柔地关注你的状态，问你累不累、想不想先走",
+      "option_d_dim": "D",
+      "option_e_text": "活跃气氛，带动大家一起玩，让你也觉得轻松愉快",
+      "option_e_dim": "E"
     },
     {
       "question_id": "choice_003",
-      "question_text": "当你感到对方很忙、陪伴不足时，哪种情况让你失落或难以接受？",
-      "option_a_text": "即使见面，对方也心不在焉，一直看手机",
-      "option_a_dim": "quality_time",
-      "option_b_text": "很久没听到对方夸我、说想我了",
-      "option_b_dim": "words_of_affirmation",
-      "option_c_text": "很久没有亲密的拥抱、亲吻",
-      "option_c_dim": "physical_touch",
-      "option_d_text": "对方顾不上帮忙，家里的琐事都堆给我",
-      "option_d_dim": "acts_of_service",
-      "option_e_text": "重要的日子被忘记",
-      "option_e_dim": "receiving_gifts"
+      "question_text": "你过生日，伴侣为你安排。最让你感动的方式是：",
+      "option_a_text": "推掉所有其他安排，一整天都陪着你",
+      "option_a_dim": "A",
+      "option_b_text": "按照你之前提过的想法，主动策划并执行",
+      "option_b_dim": "B",
+      "option_c_text": "默默安排好一切，给你一个惊喜，你什么都不用管",
+      "option_c_dim": "C",
+      "option_d_text": "记得你说过的小愿望，用温柔的方式帮你实现",
+      "option_d_dim": "D",
+      "option_e_text": "组织一个热闹的聚会，叫上你的朋友一起庆祝",
+      "option_e_dim": "E"
     },
     {
       "question_id": "choice_004",
-      "question_text": "以下哪种时刻让你感到被关心和爱护？",
-      "option_a_text": "听到：\"有你在真好，我很幸运遇到你。\"",
-      "option_a_dim": "words_of_affirmation",
-      "option_b_text": "有人特意抽时间陪我做喜欢的事情",
-      "option_b_dim": "quality_time",
-      "option_c_text": "有人下班路上顺手买了我爱吃的点心",
-      "option_c_dim": "receiving_gifts",
-      "option_d_text": "生病时得到周到照顾",
-      "option_d_dim": "acts_of_service",
-      "option_e_text": "睡前被轻轻拥抱",
-      "option_e_dim": "physical_touch"
+      "question_text": "你最近总是失眠，精神状态不太好。你最希望伴侣：",
+      "option_a_text": "睡前陪着你，直到你睡着",
+      "option_a_dim": "A",
+      "option_b_text": "帮你研究改善睡眠的方法，告诉你该怎么做",
+      "option_b_dim": "B",
+      "option_c_text": "直接帮你调整作息，比如到点催你上床、没收手机",
+      "option_c_dim": "C",
+      "option_d_text": "温柔地给你泡杯热牛奶、帮你按按头",
+      "option_d_dim": "D",
+      "option_e_text": "白天带你多运动、多出门，让身体自然累",
+      "option_e_dim": "E"
     },
     {
       "question_id": "choice_005",
-      "question_text": "在周末或空闲时间，哪种相处方式能让我感到被爱和满足？",
-      "option_a_text": "一起做顿饭，边吃边聊",
-      "option_a_dim": "quality_time",
-      "option_b_text": "收到小惊喜",
-      "option_b_dim": "receiving_gifts",
-      "option_c_text": "一起出去约会，逛街看电影",
-      "option_c_dim": "quality_time",
-      "option_d_text": "宅在家里，依偎在沙发上看剧",
-      "option_d_dim": "physical_touch",
-      "option_e_text": "有人主动帮我完成家务，让我彻底放松",
-      "option_e_dim": "acts_of_service"
+      "question_text": "你最好的朋友要搬到另一个城市，你很舍不得。你最希望伴侣：",
+      "option_a_text": "陪你去送朋友，陪你说说话",
+      "option_a_dim": "A",
+      "option_b_text": "帮你分析怎么维持这段友谊，给你建议",
+      "option_b_dim": "B",
+      "option_c_text": "帮你安排和朋友最后的聚会，让你不用操心",
+      "option_c_dim": "C",
+      "option_d_text": "温柔地听你倾诉，抱抱你",
+      "option_d_dim": "D",
+      "option_e_text": "提议和你一起规划下次去看朋友的旅行",
+      "option_e_dim": "E"
+    }
+  ],
+  "result_types": [
+    {
+      "type_id": "dependent",
+      "type_name": "依赖型",
+      "male_name": "小奶狗",
+      "female_name": "小奶猫",
+      "keywords": ["粘人精", "需要被照顾"],
+      "short_desc": ["时刻想和你贴贴", "你的存在就是安全感"],
+      "description": "喜欢时刻黏在一起，渴望被关注和照顾，情绪表达直接而频繁。他们会用撒娇、示弱的方式索取陪伴，一旦感到被冷落就会焦虑不安。在关系中，他们像一只需要抚摸的小猫，用依赖换取你的注意力。",
+      "ideal_scores": { "A": 5.5, "B": 1.5, "C": 2, "D": 4.5, "E": 2 }
+    },
+    {
+      "type_id": "proactive",
+      "type_name": "主动型",
+      "male_name": "小狼狗",
+      "female_name": "小野猫",
+      "keywords": ["进攻型", "保护欲"],
+      "short_desc": ["敢爱敢追，为你挡风", "节奏我来带，你只要享受"],
+      "description": "行动力爆棚，敢于直接表达爱意和欲望。在关系中占据主动地位，约会、表白、矛盾解决都由他们主导。同时拥有强烈的保护欲，会把伴侣视为\"自己的人\"，不容他人侵犯。他们的爱热烈而直接。",
+      "ideal_scores": { "A": 3, "B": 5, "C": 3.5, "D": 2.5, "E": 4 }
+    },
+    {
+      "type_id": "controlling",
+      "type_name": "掌控型",
+      "male_name": "霸道总裁",
+      "female_name": "女王大人",
+      "keywords": ["支配者", "全局感"],
+      "short_desc": ["听我的，不会错", "你的人生我来安排"],
+      "description": "习惯主导关系的一切节奏，从约会地点到人生规划都希望由自己拍板。追求绝对的安全感和支配感，喜欢为伴侣做决定，甚至替对方选择社交圈和穿搭。他们的控制背后往往隐藏着\"怕失去\"的深层不安。",
+      "ideal_scores": { "A": 3.5, "B": 4.5, "C": 5.5, "D": 3, "E": 2.5 }
+    },
+    {
+      "type_id": "caring",
+      "type_name": "照料型",
+      "male_name": "暖男",
+      "female_name": "知心姐姐",
+      "keywords": ["细节控", "治愈系"],
+      "short_desc": ["你的冷暖我记在心里", "不用开口，我已懂你"],
+      "description": "善于察觉对方细微的情绪和需求，用润物细无声的方式表达关心。他们会记住你的口味、生理期、压力来源，在你疲惫时递上一杯热茶。像小太阳一样温暖，但有时会因为过度照顾而忽略自己的感受。",
+      "ideal_scores": { "A": 4.5, "B": 2.5, "C": 3, "D": 5.5, "E": 3 }
+    },
+    {
+      "type_id": "aloof",
+      "type_name": "高冷型",
+      "male_name": "高冷男神",
+      "female_name": "冰山美人",
+      "keywords": ["慢热专一", "外冷内热"],
+      "short_desc": ["话少，但爱不少", "一旦认定，便是永恒"],
+      "description": "外表冷淡，话少甚至显得疏离，但内心世界极为细腻丰富。他们不轻易敞开心扉，需要长时间建立信任。一旦认定你，就会表现出极度的忠诚和专一，只是表达方式含蓄而深沉。他们像冰山，水下藏着巨大的情感。",
+      "ideal_scores": { "A": 2, "B": 2, "C": 2.5, "D": 2, "E": 1.5 }
+    },
+    {
+      "type_id": "energetic",
+      "type_name": "活力型",
+      "male_name": "阳光男孩",
+      "female_name": "元气少女",
+      "keywords": ["能量源泉", "玩乐搭子"],
+      "short_desc": ["跟我一起嗨起来", "生活就该有趣地过"],
+      "description": "永远充满正能量，热爱户外运动、社交聚会和新鲜体验。能带动身边人一起积极快乐地生活，讨厌沉闷和宅。在关系中，他们重视\"玩在一起\"的感觉，会用有趣的活动来增进感情。但有时会逃避深度的情绪对话。",
+      "ideal_scores": { "A": 3.5, "B": 4, "C": 2.5, "D": 2.5, "E": 5.5 }
+    },
+    {
+      "type_id": "parental",
+      "type_name": "管教型",
+      "male_name": "爹系男友",
+      "female_name": "妈系女友",
+      "keywords": ["操心的命", "家长范"],
+      "short_desc": ["按时吃饭，早点睡觉", "我管你，是因为在乎"],
+      "description": "喜欢叮嘱和安排伴侣的生活细节，从饮食作息、穿衣保暖到职业规划都会操心。像家长一样可靠，但也容易显得控制欲强。他们的爱表现为\"为你好\"的唠叨和干预，本质是害怕你照顾不好自己。",
+      "ideal_scores": { "A": 4, "B": 4, "C": 4.5, "D": 4.5, "E": 2 }
+    },
+    {
+      "type_id": "free",
+      "type_name": "自由型",
+      "male_name": "自由风",
+      "female_name": "独美型",
+      "keywords": ["空间至上", "不羁灵魂"],
+      "short_desc": ["别绑着我，爱我就给我自由", "独处是我的氧气"],
+      "description": "极度重视个人空间和独立自主，不喜欢被约束或查岗。感情中保持自己的节奏，不会因为恋爱而放弃原有的社交、爱好或独处时间。他们需要的是\"并肩而行\"而非\"形影不离\"的伴侣。看似疏离，实则真诚。",
+      "ideal_scores": { "A": 1.5, "B": 3, "C": 1.5, "D": 1.5, "E": 3.5 }
     }
   ]
 }

@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>答题 - 心理测试</title>
+    <title>答题 - 你未来对象是什么类型</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/deploy-config.js"></script>
 </head>
-<body>
+<body class="page-quiz">
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">心理测试</a>
+            <a href="index.html" class="logo">未来伴侣测试</a>
             <ul class="nav-links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="catalog.html">测试合集</a></li>
+                <li><a href="javascript:void(0)" class="active" onclick="navigateWithFallback('catalog', this)">测试合集</a></li>
             </ul>
         </div>
     </nav>
@@ -26,37 +26,37 @@
             <div style="padding-top: 8px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <span style="font-size: 0.85rem; color: #888; font-weight: 500;">答题进度</span>
-                    <span style="font-size: 1rem; color: #FF8C94; font-weight: 700;"><span id="current-num">1</span><span style="color: #ccc; margin: 0 3px;">/</span><span id="total-num" style="color: #999; font-weight: 500;">-</span></span>
+                    <span style="font-size: 1rem; color: #77a139; font-weight: 700;"><span id="current-num">1</span><span style="color: #ccc; margin: 0 3px;">/</span><span id="total-num" style="color: #999; font-weight: 500;">-</span></span>
                 </div>
                 <!-- 小猫走路进度条 -->
-                <div id="progress-container" style="position: relative; height: 15px; border-radius: 12px; overflow: visible; background: #e8f5e9; margin-top: 40px;">
+                <div id="progress-container" style="position: relative; height: 15px; border-radius: 12px; overflow: visible; background: #e8f5e9; margin-top: 40px; padding-bottom: 36px; margin-bottom: 4px;">
                     <!-- 草地背景 (预加载) -->
                     <picture>
                         <source srcset="assets/progress bar/草地进度条.webp" type="image/webp">
                         <source srcset="assets/progress bar/草地进度条.png" type="image/png">
-                        <img src="assets/progress bar/草地进度条.png?v=2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; z-index: 5;" alt="草地" loading="eager" fetchpriority="high">
+                        <img src="assets/progress bar/草地进度条.png?v=4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; z-index: 5;" alt="草地" loading="eager" fetchpriority="high">
                     </picture>
                     <!-- 进度遮罩 -->
                     <div id="progress-mask" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: rgba(255,255,255,0.3); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 6; border-radius: 12px;"></div>
                     <!-- 小猫 -->
                     <div id="cat-walker" style="position: absolute; bottom: 0; transform: translateX(-50%); left: 0%; transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4;">
-                        <img id="cat-frame" src="assets/progress bar/进度条小猫1.png?v=3" style="width: 40px; height: 40px; object-fit: contain; display: block;" alt="小猫" loading="eager" fetchpriority="high">
+                        <img id="cat-frame" src="assets/progress bar/进度条小猫1.png?v=4" style="width: 40px; height: 40px; object-fit: contain; display: block;" alt="小猫" loading="eager" fetchpriority="high">
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 题目卡片 -->
-        <div class="card fade-in">
+        <div class="card fade-in quiz-content-card">
             <div id="question-container">
                 <!-- 动态生成题目 -->
             </div>
 
             <!-- 导航按钮 -->
-            <div class="nav-buttons">
-                <button class="btn btn-secondary" id="prev-btn" disabled>上一题</button>
-                <button class="btn btn-primary" id="next-btn" disabled>下一题</button>
-                <button class="btn btn-primary hidden" id="submit-btn">提交</button>
+            <div class="nav-buttons quiz-nav-buttons">
+                <button type="button" class="btn btn-secondary" id="prev-btn" disabled>上一题</button>
+                <button type="button" class="btn btn-primary" id="next-btn" disabled>下一题</button>
+                <button type="button" class="btn btn-primary hidden" id="submit-btn">提交</button>
             </div>
         </div>
     </main>
@@ -69,6 +69,7 @@
         let currentQuestionIndex = 0;
         let answers = {};
         let isTransitioning = false; // 防止重复点击标志
+        let questionOptionOrder = {}; // 保存每道题的选项随机顺序
 
         // 打乱数组顺序（Fisher-Yates 算法）
         function shuffleArray(array) {
@@ -78,6 +79,58 @@
                 [arr[i], arr[j]] = [arr[j], arr[i]];
             }
             return arr;
+        }
+
+        const CHOICE_OPTION_LETTERS = new Set(['a', 'b', 'c', 'd', 'e']);
+
+        /** 选择题答案统一为小写选项字母数组；无法识别则 null */
+        function normalizeChoiceAnswerValue(raw) {
+            if (raw === undefined || raw === null) return null;
+            let arr = raw;
+            if (typeof arr === 'string' && arr.trim().length) {
+                arr = [arr];
+            }
+            if (!Array.isArray(arr)) return null;
+            const cleaned = [...new Set(
+                arr
+                    .map(v => (typeof v === 'string' ? v.trim().toLowerCase() : ''))
+                    .filter(v => CHOICE_OPTION_LETTERS.has(v))
+            )];
+            return cleaned.length > 0 ? cleaned : null;
+        }
+
+        /** 量表题：1–5；选择题：至少一项合法选项 */
+        function isQuestionAnswered(question) {
+            const answer = answers[question.question_id];
+            if (question.type === 'scale') {
+                const n = Number(answer);
+                return answer !== undefined && answer !== null && !Number.isNaN(n) && n >= 1 && n <= 5;
+            }
+            return normalizeChoiceAnswerValue(answer) !== null;
+        }
+
+        /** 从存储恢复后统一格式，避免旧数据格式导致无法判「已作答」 */
+        function normalizeStoredAnswers() {
+            for (const q of allQuestions) {
+                if (q.type === 'scale') {
+                    const v = answers[q.question_id];
+                    if (v === undefined || v === null) continue;
+                    const n = Number(v);
+                    if (!Number.isNaN(n) && n >= 1 && n <= 5) {
+                        answers[q.question_id] = n;
+                    } else {
+                        delete answers[q.question_id];
+                    }
+                    continue;
+                }
+                const v = answers[q.question_id];
+                const norm = normalizeChoiceAnswerValue(v);
+                if (norm === null) {
+                    delete answers[q.question_id];
+                } else {
+                    answers[q.question_id] = norm;
+                }
+            }
         }
 
         // 加载测试数据
@@ -94,7 +147,7 @@
                 
                 if (!quizData) {
                     // 使用相对路径加载数据
-                    const jsonUrl = 'data/default-quiz.json';
+                    const jsonUrl = resolveDeployPath('data/default-quiz.json');
                     console.log('尝试加载:', jsonUrl);
                     
                     try {
@@ -135,8 +188,12 @@
                 // 恢复进度
                 const savedIndex = StorageUtil.get(StorageKeys.CURRENT_QUESTION, 0);
                 const savedAnswers = StorageUtil.get(StorageKeys.USER_ANSWERS, {});
+                const savedOptionOrder = StorageUtil.get('question_option_order', {});
                 currentQuestionIndex = Math.min(savedIndex, allQuestions.length - 1);
-                answers = savedAnswers;
+                answers = savedAnswers && typeof savedAnswers === 'object' ? savedAnswers : {};
+                questionOptionOrder = savedOptionOrder;
+                normalizeStoredAnswers();
+                saveProgress();
 
                 // 更新总题数显示
                 document.getElementById('total-num').textContent = allQuestions.length;
@@ -159,7 +216,6 @@
         function renderQuestion() {
             const question = allQuestions[currentQuestionIndex];
             const container = document.getElementById('question-container');
-            const hasAnswer = answers[question.question_id] !== undefined;
 
             let html = `
                 <div class="fade-in">
@@ -174,10 +230,12 @@
 
             if (question.type === 'scale') {
                 // 量表题 - 5个选项（横向排列，无数字）
-                const scaleLabels = ['非常不同意', '不同意', '中立', '同意', '非常同意'];
+                // 计分：1=完全不同意, 2=不同意, 3=中立, 4=同意, 5=完全同意
+                // 反向题在结果计算时处理（6-原始分），用户交互不受影响
+                const scaleLabels = ['完全不同意', '不同意', '中立', '同意', '完全同意'];
                 html += `<div class="scale-options" id="scale-options">`;
                 for (let i = 1; i <= 5; i++) {
-                    const selected = answers[question.question_id] === i ? 'selected' : '';
+                    const selected = Number(answers[question.question_id]) === i ? 'selected' : '';
                     html += `
                         <div class="scale-btn scale-option ${selected}" data-value="${i}">
                             <span style="font-size: 0.875rem; font-weight: 500; text-align: center; line-height: 1.3;">${scaleLabels[i-1]}</span>
@@ -194,11 +252,24 @@
                     const dim = question[`option_${opt}_dim`];
                     return text && dim;
                 });
-                // 随机打乱选项顺序
-                options = options.sort(() => Math.random() - 0.5);
+                
+                // 如果这道题还没有随机顺序，则生成并保存
+                if (!questionOptionOrder[question.question_id]) {
+                    // Fisher-Yates 洗牌算法
+                    const shuffled = [...options];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+                    questionOptionOrder[question.question_id] = shuffled;
+                    StorageUtil.set('question_option_order', questionOptionOrder);
+                }
+                
+                // 使用保存的随机顺序
+                options = questionOptionOrder[question.question_id];
                 
                 // 获取当前已选答案（数组）
-                const currentAnswers = answers[question.question_id] || [];
+                const currentAnswers = normalizeChoiceAnswerValue(answers[question.question_id]) || [];
                 html += `<div class="radio-group" id="choice-options">`;
                 html += `<p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 12px;">💡 可多选（最多3个）</p>`;
                 options.forEach((opt, idx) => {
@@ -263,37 +334,36 @@
         function toggleChoice(value) {
             // 防止重复点击
             if (isTransitioning) return;
-            
+
             const question = allQuestions[currentQuestionIndex];
-            // 获取当前已选答案（数组）
-            let currentAnswers = answers[question.question_id] || [];
-            
+            const opt = typeof value === 'string' ? value.trim().toLowerCase() : '';
+            if (!CHOICE_OPTION_LETTERS.has(opt)) return;
+
+            let currentAnswers = normalizeChoiceAnswerValue(answers[question.question_id]) || [];
+
             // 切换选中状态
-            const isSelected = currentAnswers.includes(value);
+            const isSelected = currentAnswers.includes(opt);
             if (isSelected) {
-                // 如果已选中，则取消选中
-                currentAnswers = currentAnswers.filter(v => v !== value);
+                currentAnswers = currentAnswers.filter(v => v !== opt);
             } else {
-                // 如果未选中，检查是否已达到最大选择数（3个）
                 if (currentAnswers.length >= 3) {
                     alert('最多只能选择3个选项');
                     return;
                 }
-                // 如果未选中，则添加选中
-                currentAnswers.push(value);
+                currentAnswers.push(opt);
             }
-            
-            // 保存答案（如果是空数组则删除该题的答案记录）
-            if (currentAnswers.length === 0) {
+
+            const norm = normalizeChoiceAnswerValue(currentAnswers);
+            if (norm === null) {
                 delete answers[question.question_id];
             } else {
-                answers[question.question_id] = currentAnswers;
+                answers[question.question_id] = norm;
             }
             
             saveProgress();
             
             // 直接更新当前选项的样式，不重新渲染整个题目
-            const clickedOption = document.querySelector(`.choice-option[data-option="${value}"]`);
+            const clickedOption = document.querySelector(`.choice-option[data-option="${opt}"]`);
             if (clickedOption) {
                 if (isSelected) {
                     clickedOption.classList.remove('selected');
@@ -310,6 +380,7 @@
         function saveProgress() {
             StorageUtil.set(StorageKeys.USER_ANSWERS, answers);
             StorageUtil.set(StorageKeys.CURRENT_QUESTION, currentQuestionIndex);
+            StorageUtil.set('question_option_order', questionOptionOrder);
         }
 
         // 小猫走路动画
@@ -320,8 +391,8 @@
             1: new Image(),
             2: new Image()
         };
-        catImages[1].src = 'assets/progress bar/进度条小猫1.png?v=3';
-        catImages[2].src = 'assets/progress bar/进度条小猫2.png?v=3';
+        catImages[1].src = 'assets/progress bar/进度条小猫1.png?v=4';
+        catImages[2].src = 'assets/progress bar/进度条小猫2.png?v=4';
                 
         function startCatAnimation() {
             if (catAnimationInterval) return;
@@ -351,15 +422,7 @@
         // 更新按钮状态
         function updateButtons() {
             const question = allQuestions[currentQuestionIndex];
-            // 检查是否有答案（量表题是单个值，选择题是数组）
-            let hasAnswer = false;
-            const answer = answers[question.question_id];
-            if (question.type === 'scale') {
-                hasAnswer = answer !== undefined;
-            } else {
-                // 选择题需要至少选中一个
-                hasAnswer = Array.isArray(answer) && answer.length > 0;
-            }
+            const hasAnswer = isQuestionAnswered(question);
             const isLast = currentQuestionIndex === allQuestions.length - 1;
 
             const prevBtn = document.getElementById('prev-btn');
@@ -371,14 +434,15 @@
             if (isLast) {
                 nextBtn.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
-                submitBtn.disabled = !hasAnswer;
+                /* 不在此禁用提交：避免判题逻辑与本地数据边缘情况导致按钮无法点击；未完成时由点击校验提示 */
+                submitBtn.disabled = false;
+                submitBtn.setAttribute('aria-disabled', hasAnswer ? 'false' : 'true');
             } else {
                 nextBtn.classList.remove('hidden');
                 submitBtn.classList.add('hidden');
+                submitBtn.removeAttribute('aria-disabled');
                 nextBtn.disabled = !hasAnswer;
             }
-            
-            console.log('updateButtons:', { type: question.type, hasAnswer, isLast, answer });
         }
 
         // 上一题
@@ -402,15 +466,7 @@
             
             // 检查当前题是否已作答
             const question = allQuestions[currentQuestionIndex];
-            const answer = answers[question.question_id];
-            let hasAnswer = false;
-            if (question.type === 'scale') {
-                hasAnswer = answer !== undefined;
-            } else {
-                hasAnswer = Array.isArray(answer) && answer.length > 0;
-            }
-            
-            if (!hasAnswer) {
+            if (!isQuestionAnswered(question)) {
                 alert('请先回答当前题目');
                 return;
             }
@@ -430,22 +486,27 @@
 
         // 提交
         document.getElementById('submit-btn').addEventListener('click', () => {
-            // 检查是否全部答完
-            const answeredCount = Object.keys(answers).length;
-            if (answeredCount < allQuestions.length) {
-                alert(`还有 ${allQuestions.length - answeredCount} 题未作答，请完成所有题目后再提交`);
+            const unanswered = allQuestions.filter(q => !isQuestionAnswered(q));
+            if (unanswered.length > 0) {
+                alert(`还有 ${unanswered.length} 题未作答，请完成所有题目后再提交`);
                 return;
             }
 
             // 保存答案并跳转到结果页
             StorageUtil.set(StorageKeys.USER_ANSWERS, answers);
-            window.location.href = 'result.html';
+            window.location.href = getDeployPageUrl('result.html');
         });
 
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', () => {
             applyUIConfig();
-            loadQuizData();
+            if (!StorageUtil.get(StorageKeys.GENDER)) {
+                window.location.replace('index.html');
+                return;
+            }
+            loadQuizData().then(() => {
+                // 性别在首页选择；重新测试会清除性别，需先回首页重选
+            });
             startCatAnimation(); // 启动小猫走路动画
             
             // 使用事件委托处理题目选项点击
@@ -455,8 +516,8 @@
                 if (scaleEl) {
                     e.preventDefault();
                     e.stopPropagation();
-                    const value = parseInt(scaleEl.dataset.value);
-                    console.log('量表题选项被点击:', value);
+                    const value = parseInt(scaleEl.dataset.value, 10);
+                    if (Number.isNaN(value) || value < 1 || value > 5) return;
                     selectScale(value);
                     return;
                 }
@@ -475,7 +536,7 @@
     </script>
 
     <!-- 页脚 -->
-    <footer style="text-align: center; padding: 40px 20px; margin-top: 40px; background: linear-gradient(to bottom, transparent, rgba(255,140,148,0.05)); border-top: 1px solid rgba(255,140,148,0.1);">
+    <footer style="text-align: center; padding: 40px 20px; margin-top: 40px; background: linear-gradient(to bottom, transparent, rgba(119,161,57,0.06)); border-top: 1px solid rgba(119,161,57,0.12);">
         <div style="max-width: 800px; margin: 0 auto;">
             <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0 0 8px;">
                 <span style="font-weight: 600; color: var(--primary-color);">心理测试</span> © 2026 起源研究社 Origin Lab

@@ -8,7 +8,8 @@ const StorageKeys = {
     USER_ANSWERS: 'user_answers',
     CURRENT_QUESTION: 'current_question',
     QUIZ_CONFIG: 'quiz_config',
-    UI_CONFIG: 'ui_config'
+    UI_CONFIG: 'ui_config',
+    GENDER: 'user_gender'
 };
 
 /**
@@ -46,6 +47,8 @@ class StorageUtil {
     static clearQuizProgress() {
         this.remove(StorageKeys.USER_ANSWERS);
         this.remove(StorageKeys.CURRENT_QUESTION);
+        this.remove(StorageKeys.GENDER);
+        this.remove('question_option_order');
     }
 }
 
@@ -304,9 +307,9 @@ const Utils = {
  */
 const DefaultUIConfig = {
     theme: 'default',
-    primaryColor: '#FF8C94',
-    secondaryColor: '#FFD3B6',
-    backgroundColor: '#FFF5F5',
+    primaryColor: '#77a139',
+    secondaryColor: '#d4e8b6',
+    backgroundColor: '#f5faf0',
     fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
     fontSize: {
         title: '2rem',
@@ -334,6 +337,8 @@ function applyUIConfig(config = null) {
     const root = document.documentElement;
     
     root.style.setProperty('--primary-color', uiConfig.primaryColor);
+    root.style.setProperty('--primary-dark', '#5f852c');
+    root.style.setProperty('--primary-mid', '#94b84d');
     root.style.setProperty('--secondary-color', uiConfig.secondaryColor);
     root.style.setProperty('--background-color', uiConfig.backgroundColor);
     root.style.setProperty('--font-family', uiConfig.fontFamily);

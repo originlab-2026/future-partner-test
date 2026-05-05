@@ -2,100 +2,106 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心理测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="description" content="起源研究社心理测试 - 你未来对象是什么类型？发现你的伴侣偏好密码">
+    <meta name="keywords" content="心理测试,未来伴侣,伴侣类型,情感测试,性格测试">
+    <title>起源研究社 - 你未来对象是什么类型</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/deploy-config.js"></script>
 </head>
-<body>
+<body class="page-home">
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">心理测试</a>
+            <a href="index.html" class="logo">未来伴侣测试</a>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">首页</a></li>
-                <li><a href="catalog.html">测试合集</a></li>
+                <li><a href="javascript:void(0)" class="active" onclick="navigateWithFallback('catalog', this)">测试合集</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- 主内容区 -->
     <main class="container">
-        <!-- 首页 Banner 图片 -->
+        <!-- 首页 Banner（assets/elements/未来伴侣首页.png） -->
         <div class="fade-in" style="margin: 0; text-align: center;">
-            <picture>
-                <source srcset="assets/images/首页.webp" type="image/webp">
-                <source srcset="assets/images/首页.png" type="image/png">
-                <img src="assets/images/首页.png?v=3" 
-                     alt="起源研究社心理测试 - 爱的五种语言" 
-                     loading="eager"
-                     fetchpriority="high"
-                     decoding="async"
-                     style="width: 100%; max-width: 1024px; height: auto; display: block; margin: 0 auto;">
-            </picture>
+            <div style="width: 100%; max-width: 1024px; margin: 0 auto; border-radius: 0 0 24px 24px; overflow: hidden; line-height: 0; background: linear-gradient(135deg, #c8e0a8 0%, #77a139 50%, #d4e8b6 100%);">
+                <img src="assets/elements/未来伴侣首页.png?v=4" alt="你未来对象是什么类型？发现你的伴侣偏好密码" style="width: 100%; height: auto; display: block;" loading="eager" fetchpriority="high">
+            </div>
         </div>
         
-        <!-- 开始测试按钮 -->
-        <div style="text-align: center; margin: 0 0 32px;">
-            <a href="quiz.html" id="start-btn">
-                <picture>
-                    <source srcset="assets/images/按钮 - 开始测试.webp" type="image/webp">
-                    <source srcset="assets/images/按钮 - 开始测试.png" type="image/png">
-                    <img src="assets/images/按钮 - 开始测试.png" 
-                         alt="开始测试" 
-                         loading="eager"
-                         fetchpriority="high"
-                         decoding="async"
-                         style="width: 200px; height: auto; cursor: pointer; transition: transform 0.2s ease;"
-                         onmouseover="this.style.transform='scale(1.05)'"
-                         onmouseout="this.style.transform='scale(1)'">
-                </picture>
+        <!-- 开始测试按钮（图片） -->
+        <div style="text-align: center; margin: -24px 0 32px; position: relative; z-index: 10;">
+            <a href="javascript:void(0)" id="start-btn" onclick="handleStartQuiz()" style="display: inline-block; line-height: 0; cursor: pointer;">
+                <img src="assets/elements/开始测试按钮.png?v=4" alt="开始测试" style="max-width: 320px; width: 78%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 6px 25px rgba(119, 161, 57, 0.4));" loading="eager">
             </a>
         </div>
 
         <!-- 测试描述 -->
-        <div class="card fade-in" style="margin-top: 24px; padding: 28px;">
-            <p style="font-size: 0.95rem; line-height: 1.9; color: #555; margin: 0 0 16px; text-align: left;">
-                在每一段亲密关系中，我们都有自己最擅长接收爱的方式——那是属于你的<span style="color: #FF8C94; font-weight: 600;">「爱的母语」</span>。有时不是爱消失了，而是我们用自己习惯的方式表达，对方却未能接收到。
+        <div class="card fade-in home-surface-card" style="margin-top: 24px; padding: 28px;">
+            <p style="font-size: 0.95rem; line-height: 1.9; color: #333; margin: 0 0 16px; text-align: left;">
+                每个人心中都藏着一个<span style="color: #5f852c; font-weight: 600;">理想伴侣的轮廓</span>——它源于你如何感受爱、如何渴望被爱。在亲密关系中，我们往往被某种特定类型的伴侣深深吸引：是时刻黏着你的"小奶狗"，还是霸道替你决定的"霸道总裁"？是温柔体贴的"暖男"，还是自由不羁的"独美型"？
             </p>
-            <p style="font-size: 0.95rem; line-height: 1.9; color: #555; margin: 0 0 16px; text-align: left;">
-                本测试基于心理学家 Gary Chapman 博士提出的「五种爱语」理论，通过一系列情景选择，帮助你发现自己在亲密关系中最看重的情感表达方式，让你更懂自己，也更懂如何爱身边的人。
+            <p style="font-size: 0.95rem; line-height: 1.9; color: #333; margin: 0 0 16px; text-align: left;">
+                本测试基于<span style="color: #5f852c; font-weight: 600;">亲密关系心理学中的依恋风格、支配顺从倾向与社交偏好等理论</span>，通过一系列情景选择和态度量表，帮助你发现自己在关系中最看重的情感互动模式，从而更清晰地理解：什么样的伴侣能让你感到舒适、满足与被爱。
             </p>
-            <p style="font-size: 0.95rem; line-height: 1.8; color: #555; margin: 0; text-align: center; font-weight: 500;">
-                了解自己的爱语，也让彼此更懂如何去爱。
+            <p style="font-size: 0.95rem; line-height: 1.8; color: #333; margin: 0; text-align: center; font-weight: 500;">
+                了解你的<span style="color: #5f852c; font-weight: 600;">「伴侣偏好密码」</span>，让未来的遇见更懂彼此。
             </p>
         </div>
 
         <!-- 测试信息 -->
-        <div style="margin-top: 20px; padding: 18px 24px; background: linear-gradient(135deg, #FFF5F5 0%, #FFFAFA 100%); border-radius: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(255,140,148,0.15); border: 1px solid rgba(255,140,148,0.2);">
+        <div class="home-stats-strip" style="margin-top: 20px; padding: 18px 24px; border-radius: 16px; display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="flex: 1; text-align: center; position: relative;">
                 <div style="font-size: 0.75rem; color: #999; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">题目总数</div>
-                <span style="font-size: 1.4rem; color: #FF6B6B; font-weight: 700;" id="question-count">-</span>
-                <span style="font-size: 0.85rem; color: #FF8C94; font-weight: 500; margin-left: 2px;">题</span>
+                <span style="font-size: 1.4rem; color: #5f852c; font-weight: 700;" id="question-count">-</span>
+                <span style="font-size: 0.85rem; color: #77a139; font-weight: 500; margin-left: 2px;">题</span>
             </div>
-            <div style="width: 1px; background: linear-gradient(to bottom, transparent, rgba(255,140,148,0.3), transparent); margin: 0 16px;"></div>
+            <div style="width: 1px; background: linear-gradient(to bottom, transparent, rgba(119,161,57,0.28), transparent); margin: 0 16px;"></div>
             <div style="flex: 1; text-align: center;">
                 <div style="font-size: 0.75rem; color: #999; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">预计时长</div>
-                <span style="font-size: 1.4rem; color: #FF6B6B; font-weight: 700;">2-3</span>
-                <span style="font-size: 0.85rem; color: #FF8C94; font-weight: 500; margin-left: 2px;">分钟</span>
+                <span style="font-size: 1.4rem; color: #5f852c; font-weight: 700;">2-3</span>
+                <span style="font-size: 0.85rem; color: #77a139; font-weight: 500; margin-left: 2px;">分钟</span>
             </div>
         </div>
 
-        <!-- 维度预览 -->
+        <!-- 伴侣类型预览 -->
         <div class="fade-in" style="margin-top: 28px;">
-            <h2 style="text-align: center; font-size: 1.1rem; color: #555; margin-bottom: 20px;">五大爱语维度</h2>
-            <div id="dimensions-preview">
+            <h2 class="home-types-heading" style="text-align: center; font-size: 1.1rem; margin-bottom: 20px;">五大测评维度</h2>
+            <div id="types-preview">
                 <!-- 动态生成 -->
             </div>
         </div>
     </main>
 
+    <!-- 性别选择引导遮罩（全屏） -->
+    <div id="gender-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div id="gender-modal" style="background: white; border-radius: 24px; padding: 40px 36px; max-width: 420px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transform: scale(0.9); transition: transform 0.3s ease; text-align: center;">
+            <h2 style="margin: 0 0 8px; font-size: 1.5rem; color: #333; font-weight: 700;">请选择你的性别</h2>
+            <p style="font-size: 0.9rem; color: #888; margin: 0 0 32px; line-height: 1.6;">仅需选择一次，用于测试题目和结果中的个性化称呼</p>
+            
+            <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                <button class="gender-option-btn" id="overlay-female" onclick="selectGender('female')" style="flex: 1; padding: 20px 16px; border: 2px solid #E8E8E8; background: white; border-radius: 16px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <span style="font-size: 2.5rem;">👩</span>
+                    <span style="font-size: 1rem; font-weight: 600; color: #333;">女生</span>
+                </button>
+                <button class="gender-option-btn" id="overlay-male" onclick="selectGender('male')" style="flex: 1; padding: 20px 16px; border: 2px solid #E8E8E8; background: white; border-radius: 16px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <span style="font-size: 2.5rem;">👨</span>
+                    <span style="font-size: 1rem; font-weight: 600; color: #333;">男生</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 页脚 -->
-    <footer style="text-align: center; padding: 40px 20px; margin-top: 40px; background: linear-gradient(to bottom, transparent, rgba(255,140,148,0.05)); border-top: 1px solid rgba(255,140,148,0.1);">
+    <footer class="site-footer site-footer--home">
         <div style="max-width: 800px; margin: 0 auto;">
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0 0 8px;">
-                <span style="font-weight: 600; color: var(--primary-color);">心理测试</span> © 2026 起源研究社 Origin Lab
+            <p class="site-footer-line" style="font-size: 0.9rem; margin: 0 0 8px;">
+                <span class="site-footer-brand" style="font-weight: 600;">心理测试</span> © 2026 起源研究社 Origin Lab
             </p>
-            <p style="color: #aaa; font-size: 0.75rem; margin: 0; line-height: 1.6;">
+            <p class="site-footer-sub" style="font-size: 0.75rem; margin: 0; line-height: 1.6;">
                 保留所有权利 | 仅供娱乐参考，不构成专业建议
             </p>
         </div>
@@ -103,19 +109,100 @@
 
     <script src="js/utils.js"></script>
     <script>
-        // 默认测试数据（备用）
-        const defaultQuizData = {
-            "quiz_name": "爱的五种语言测试",
-            "reference": "Gary Chapman 的五种爱语理论",
-            "nbr_question": 30,
-            "dimensions": [
-                {"dimension_name": "肯定的言语", "description": "用语言表达爱和鼓励"},
-                {"dimension_name": "高质量陪伴", "description": "重视一起度过的专注时间"},
-                {"dimension_name": "收到礼物", "description": "通过礼物感受被爱"},
-                {"dimension_name": "服务的行动", "description": "通过行动、帮助对方表达爱"},
-                {"dimension_name": "身体接触", "description": "通过拥抱、牵手等身体接触感受爱"}
-            ]
-        };
+        // 处理开始测试按钮点击
+        function handleStartQuiz() {
+            const savedGender = StorageUtil.get(StorageKeys.GENDER);
+            
+            if (!savedGender) {
+                // 未选择性别，显示引导遮罩
+                showGenderOverlay();
+            } else {
+                // 已选择，直接跳转
+                window.location.href = getDeployPageUrl('quiz.html');
+            }
+        }
+
+        // 显示性别选择引导遮罩
+        function showGenderOverlay() {
+            const overlay = document.getElementById('gender-overlay');
+            const modal = document.getElementById('gender-modal');
+            overlay.style.display = 'flex';
+            
+            // 触发重排以启动过渡动画
+            requestAnimationFrame(() => {
+                overlay.style.opacity = '1';
+                modal.style.transform = 'scale(1)';
+            });
+            
+            // 恢复之前的选择（如果有）
+            const savedGender = StorageUtil.get(StorageKeys.GENDER);
+            if (savedGender) {
+                highlightGenderButton(savedGender);
+            }
+        }
+
+        // 关闭性别选择引导遮罩
+        function closeGenderOverlay() {
+            const overlay = document.getElementById('gender-overlay');
+            const modal = document.getElementById('gender-modal');
+            
+            overlay.style.opacity = '0';
+            modal.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
+        // 选择性别
+        function selectGender(gender) {
+            StorageUtil.set(StorageKeys.GENDER, gender);
+            highlightGenderButton(gender);
+            
+            // 视觉反馈：短暂延迟后自动跳转
+            const selectedBtn = document.getElementById(gender === 'female' ? 'overlay-female' : 'overlay-male');
+            selectedBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                selectedBtn.style.transform = 'scale(1)';
+            }, 150);
+            
+            // 1秒后自动跳转
+            setTimeout(() => {
+                closeGenderOverlay();
+                setTimeout(() => {
+                    window.location.href = getDeployPageUrl('quiz.html');
+                }, 300);
+            }, 800);
+        }
+
+        // 高亮已选择的性别按钮
+        function highlightGenderButton(gender) {
+            document.querySelectorAll('.gender-option-btn').forEach(btn => {
+                btn.style.borderColor = '#E8E8E8';
+                btn.style.background = 'white';
+                btn.style.boxShadow = 'none';
+            });
+            
+            const selectedBtn = document.getElementById(gender === 'female' ? 'overlay-female' : 'overlay-male');
+            selectedBtn.style.borderColor = '#77a139';
+            selectedBtn.style.background = 'linear-gradient(135deg, #eef6e4, #e2efd0)';
+            selectedBtn.style.boxShadow = '0 4px 20px rgba(119,161,57,0.25)';
+        }
+
+        /** 与 data/default-quiz.json 中 dimensions 一致，用于 JSON 未加载时的首页兜底 */
+        const DEFAULT_DIMENSIONS_FALLBACK = [
+            { dimension_id: 'A', dimension_name: '亲密陪伴的需求', description: '衡量你对伴侣陪伴、共处时间的渴望程度。高分者需要频繁的陪伴和相处，低分者更享受独处空间。' },
+            { dimension_id: 'B', dimension_name: '主动带节奏的偏好', description: '衡量你在关系中主导决策和推动互动的倾向。高分者喜欢掌控节奏，低分者偏好被动跟随。' },
+            { dimension_id: 'C', dimension_name: '掌控和强势的接受度', description: '衡量你对伴侣支配行为的接受程度。高分者愿意被伴侣"管着"，低分者追求独立自主。' },
+            { dimension_id: 'D', dimension_name: '温柔照料的需求', description: '衡量你对伴侣温柔体贴、细心照顾的渴望程度。高分者渴望被照料，低分者倾向自我消化。' },
+            { dimension_id: 'E', dimension_name: '活力社交的偏好', description: '衡量你对共同外出活动和社交互动的偏好。高分者热爱一起外出玩乐，低分者更喜欢安静独处。' }
+        ];
+
+        const DIMENSION_ORDER = ['A', 'B', 'C', 'D', 'E'];
+
+        function dimensionPreviewImageUrl(dimensionName) {
+            return 'assets/dimension/' + encodeURIComponent(dimensionName) + '.png?v=4';
+        }
 
         // 加载测试数据
         async function loadQuizData() {
@@ -123,7 +210,7 @@
                 // 先检查 localStorage 中是否有自定义测试数据
                 let quizData = StorageUtil.get(StorageKeys.QUIZ_DATA);
                 
-                // 检查 localStorage 数据是否有效（必须包含题目数据）
+                // 检查 localStorage 数据是否有效
                 if (quizData && (!quizData.scale_questions || !quizData.choice_questions)) {
                     console.warn('localStorage 数据不完整，清除后重新加载');
                     StorageUtil.remove(StorageKeys.QUIZ_DATA);
@@ -132,330 +219,183 @@
                 
                 // 如果没有有效数据，加载默认数据
                 if (!quizData) {
-                    let loadSuccess = false;
-                    // 使用相对路径加载
                     try {
-                        const response = await fetch('data/default-quiz.json?v=' + Date.now());
+                        const response = await fetch(resolveDeployPath('data/default-quiz.json') + '?v=' + Date.now());
                         if (response.ok) {
                             quizData = await response.json();
                             StorageUtil.set(StorageKeys.QUIZ_DATA, quizData);
                             console.log('成功加载 JSON 数据');
-                            loadSuccess = true;
                         }
                     } catch (e) {
                         console.warn('加载失败:', e);
-                    }
-                    // 如果都失败了，使用内置数据
-                    if (!loadSuccess) {
-                        console.warn('无法加载 JSON 文件，使用内置默认数据');
-                        quizData = defaultQuizData;
-                        StorageUtil.set(StorageKeys.QUIZ_DATA, quizData);
                     }
                 } else {
                     console.log('使用 localStorage 缓存的数据');
                 }
 
-                // 更新页面内容
-                const quizTitleEl = document.getElementById('quiz-title');
-                const quizRefEl = document.getElementById('quiz-reference');
-                if (quizTitleEl) quizTitleEl.textContent = quizData.quiz_name;
-                if (quizRefEl) quizRefEl.textContent = quizData.reference;
-                document.getElementById('question-count').textContent = `${quizData.nbr_question || 30} `;
-
-                // 更新维度预览 - 横向滑动轮播
-                const dimensionsContainer = document.getElementById('dimensions-preview');
-                if (quizData.dimensions && quizData.dimensions.length > 0) {
-                    const timestamp = Date.now();
-                    dimensionsContainer.innerHTML = `
-                        <style>
-                            .dimensions-carousel {
-                                position: relative;
-                                overflow: hidden;
-                                padding: 0 40px;
-                            }
-                            .dimensions-track {
-                                display: flex;
-                                gap: 16px;
-                                transition: transform 0.3s ease;
-                            }
-                            .dimension-card {
-                                flex: 0 0 calc(33.333% - 11px);
-                                background: white;
-                                border-radius: 20px;
-                                padding: 32px 24px;
-                                text-align: center;
-                                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                                border: 1px solid #f0f0f0;
-                            }
-                            .dimension-card img {
-                                width: 140px;
-                                height: 140px;
-                                object-fit: contain;
-                                margin-bottom: 12px;
-                            }
-                            .dimension-card h3 {
-                                margin: 0 0 12px;
-                                font-size: 1.1rem;
-                                color: #333;
-                                font-weight: 600;
-                            }
-                            .dimension-card p {
-                                margin: 0;
-                                font-size: 0.9rem;
-                                color: #888;
-                                line-height: 1.7;
-                            }
-                            .carousel-btn {
-                                position: absolute;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                width: 40px;
-                                height: 40px;
-                                background: white;
-                                border: none;
-                                border-radius: 50%;
-                                box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-                                cursor: pointer;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                z-index: 10;
-                                transition: all 0.2s ease;
-                            }
-                            .carousel-btn:hover {
-                                background: #FF8C94;
-                                color: white;
-                            }
-                            .carousel-btn.prev { left: 0; }
-                            .carousel-btn.next { right: 0; }
-                            .carousel-btn:disabled {
-                                opacity: 0.3;
-                                cursor: not-allowed;
-                            }
-                            .carousel-dots {
-                                display: flex;
-                                justify-content: center;
-                                gap: 8px;
-                                margin-top: 20px;
-                            }
-                            .carousel-dot {
-                                width: 8px;
-                                height: 8px;
-                                border-radius: 50%;
-                                background: #ddd;
-                                cursor: pointer;
-                                transition: all 0.2s ease;
-                            }
-                            .carousel-dot.active {
-                                background: #FF8C94;
-                                width: 24px;
-                                border-radius: 4px;
-                            }
-                            @media (max-width: 768px) {
-                                .dimensions-carousel { padding: 0 32px; }
-                                .dimension-card {
-                                    flex: 0 0 calc(50% - 8px);
-                                    padding: 24px 16px;
-                                }
-                                .dimension-card img {
-                                    width: 120px;
-                                    height: 120px;
-                                }
-                                .dimension-card h3 {
-                                    font-size: 1rem;
-                                }
-                                .dimension-card p {
-                                    font-size: 0.85rem;
-                                }
-                            }
-                            @media (max-width: 480px) {
-                                .dimensions-carousel { padding: 0 24px; }
-                                .dimension-card {
-                                    flex: 0 0 100%;
-                                    padding: 28px 20px;
-                                }
-                            }
-                        </style>
-                        <div class="dimensions-carousel">
-                            <button class="carousel-btn prev" onclick="moveCarousel(-1)">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                            </button>
-                            <div class="dimensions-track" id="dimensionsTrack">
-                                ${quizData.dimensions.map(dim => `
-                                    <div class="dimension-card">
-                                        <picture>
-                                            <source srcset="assets/icon/${dim.dimension_name}.webp" type="image/webp">
-                                            <source srcset="assets/icon/${dim.dimension_name}.png" type="image/png">
-                                            <img src="assets/icon/${dim.dimension_name}.png?v=${timestamp}" alt="${dim.dimension_name}" loading="lazy" decoding="async">
-                                        </picture>
-                                        <h3>${dim.dimension_name}</h3>
-                                        <p>${dim.description}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <button class="carousel-btn next" onclick="moveCarousel(1)">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="carousel-dots" id="carouselDots"></div>
-                    `;
-                    initCarousel();
+                // 更新题目数量
+                if (quizData && quizData.nbr_question) {
+                    document.getElementById('question-count').textContent = quizData.nbr_question;
+                } else {
+                    document.getElementById('question-count').textContent = '30';
                 }
+
+                renderDimensionPreview(quizData);
 
             } catch (error) {
                 console.error('加载测试数据失败:', error);
-                // 使用内置默认数据作为最后备用
-                const quizTitleEl = document.getElementById('quiz-title');
-                const quizRefEl = document.getElementById('quiz-reference');
-                if (quizTitleEl) quizTitleEl.textContent = defaultQuizData.quiz_name;
-                if (quizRefEl) quizRefEl.textContent = defaultQuizData.reference;
-                document.getElementById('question-count').textContent = `${defaultQuizData.nbr_question} `;
-                
-                const dimensionsContainer = document.getElementById('dimensions-preview');
-                const timestamp = Date.now();
-                dimensionsContainer.innerHTML = `
-                    <style>
-                        .dimensions-carousel {
-                            position: relative;
-                            overflow: hidden;
-                            padding: 0 40px;
-                        }
-                        .dimensions-track {
-                            display: flex;
-                            gap: 16px;
-                            transition: transform 0.3s ease;
-                        }
-                        .dimension-card {
-                            flex: 0 0 calc(33.333% - 11px);
-                            background: white;
-                            border-radius: 20px;
-                            padding: 32px 24px;
-                            text-align: center;
-                            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                            border: 1px solid #f0f0f0;
-                        }
-                        .dimension-card img {
-                            width: 140px;
-                            height: 140px;
-                            object-fit: contain;
-                            margin-bottom: 12px;
-                        }
-                        .dimension-card h3 {
-                            margin: 0 0 12px;
-                            font-size: 1.1rem;
-                            color: #333;
-                            font-weight: 600;
-                        }
-                        .dimension-card p {
-                            margin: 0;
-                            font-size: 0.9rem;
-                            color: #888;
-                            line-height: 1.7;
-                        }
-                        .carousel-btn {
-                            position: absolute;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            width: 40px;
-                            height: 40px;
-                            background: white;
-                            border: none;
-                            border-radius: 50%;
-                            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-                            cursor: pointer;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            z-index: 10;
-                            transition: all 0.2s ease;
-                        }
-                        .carousel-btn:hover {
-                            background: #FF8C94;
-                            color: white;
-                        }
-                        .carousel-btn.prev { left: 0; }
-                        .carousel-btn.next { right: 0; }
-                        .carousel-btn:disabled {
-                            opacity: 0.3;
-                            cursor: not-allowed;
-                        }
-                        .carousel-dots {
-                            display: flex;
-                            justify-content: center;
-                            gap: 8px;
-                            margin-top: 20px;
-                        }
-                        .carousel-dot {
-                            width: 8px;
-                            height: 8px;
-                            border-radius: 50%;
-                            background: #ddd;
-                            cursor: pointer;
-                            transition: all 0.2s ease;
-                        }
-                        .carousel-dot.active {
-                            background: #FF8C94;
-                            width: 24px;
-                            border-radius: 4px;
-                        }
-                        @media (max-width: 768px) {
-                            .dimensions-carousel { padding: 0 32px; }
-                            .dimension-card {
-                                flex: 0 0 calc(50% - 8px);
-                                padding: 24px 16px;
-                            }
-                            .dimension-card img {
-                                width: 120px;
-                                height: 120px;
-                            }
-                            .dimension-card h3 {
-                                font-size: 1rem;
-                            }
-                            .dimension-card p {
-                                font-size: 0.85rem;
-                            }
-                        }
-                        @media (max-width: 480px) {
-                            .dimensions-carousel { padding: 0 24px; }
-                            .dimension-card {
-                                flex: 0 0 100%;
-                                padding: 28px 20px;
-                            }
-                        }
-                    </style>
-                    <div class="dimensions-carousel">
-                        <button class="carousel-btn prev" onclick="moveCarousel(-1)">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                        <div class="dimensions-track" id="dimensionsTrack">
-                            ${defaultQuizData.dimensions.map(dim => `
-                                <div class="dimension-card">
-                                    <picture>
-                                        <source srcset="assets/icon/${dim.dimension_name}.webp" type="image/webp">
-                                        <source srcset="assets/icon/${dim.dimension_name}.png" type="image/png">
-                                        <img src="assets/icon/${dim.dimension_name}.png?v=${timestamp}" alt="${dim.dimension_name}" loading="lazy" decoding="async">
-                                    </picture>
-                                    <h3>${dim.dimension_name}</h3>
-                                    <p>${dim.description}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <button class="carousel-btn next" onclick="moveCarousel(1)">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="carousel-dots" id="carouselDots"></div>
-                `;
-                initCarousel();
+                document.getElementById('question-count').textContent = '30';
+                renderDimensionPreview(null);
             }
+        }
+
+        // 渲染五大维度预览（配图 assets/dimension/，文案与测验数据一致）
+        function renderDimensionPreview(quizData) {
+            const container = document.getElementById('types-preview');
+            let dims = (quizData && quizData.dimensions && quizData.dimensions.length)
+                ? [...quizData.dimensions]
+                : [...DEFAULT_DIMENSIONS_FALLBACK];
+            dims.sort((a, b) => DIMENSION_ORDER.indexOf(a.dimension_id) - DIMENSION_ORDER.indexOf(b.dimension_id));
+
+            const cardsHtml = dims.map((dim) => {
+                const imgSrc = dimensionPreviewImageUrl(dim.dimension_name);
+                return `
+                            <div class="type-card">
+                                <div class="type-card-icon" style="background: #f7faf3; box-shadow: 0 4px 14px rgba(0,0,0,0.07), inset 0 0 0 1px rgba(119,161,57,0.1);">
+                                    <img src="${imgSrc}" alt="${dim.dimension_name}" loading="lazy">
+                                </div>
+                                <h3>${dim.dimension_name}</h3>
+                                <p>${dim.description}</p>
+                            </div>`;
+            }).join('');
+
+            container.innerHTML = `
+                <style>
+                    .types-carousel {
+                        position: relative;
+                        overflow: hidden;
+                        padding: 0 40px;
+                    }
+                    .types-track {
+                        display: flex;
+                        gap: 16px;
+                        transition: transform 0.3s ease;
+                    }
+                    .type-card {
+                        flex: 0 0 calc(33.333% - 11px);
+                        background: white;
+                        border-radius: 20px;
+                        padding: 28px 20px;
+                        text-align: center;
+                        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                        border: 1px solid #f0f0f0;
+                    }
+                    .type-card-icon {
+                        width: 100%;
+                        margin: 0 0 14px;
+                        border-radius: 18px;
+                        display: block;
+                        padding: 4px 0;
+                        box-sizing: border-box;
+                    }
+                    .type-card-icon img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 14px;
+                    }
+                    .type-card h3 {
+                        margin: 0 0 12px;
+                        font-size: 1.1rem;
+                        color: #333;
+                        font-weight: 600;
+                    }
+                    .type-card p {
+                        margin: 0;
+                        font-size: 0.85rem;
+                        color: #555;
+                        line-height: 1.65;
+                        text-align: left;
+                    }
+                    .carousel-btn {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 40px;
+                        height: 40px;
+                        background: white;
+                        border: none;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10;
+                        transition: all 0.2s ease;
+                    }
+                    .carousel-btn:hover {
+                        background: #77a139;
+                        color: white;
+                    }
+                    .carousel-btn.prev { left: 0; }
+                    .carousel-btn.next { right: 0; }
+                    .carousel-btn:disabled {
+                        opacity: 0.3;
+                        cursor: not-allowed;
+                    }
+                    .carousel-dots {
+                        display: flex;
+                        justify-content: center;
+                        gap: 8px;
+                        margin-top: 20px;
+                    }
+                    .carousel-dot {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background: #ddd;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                    }
+                    .carousel-dot.active {
+                        background: #77a139;
+                        width: 24px;
+                        border-radius: 4px;
+                    }
+                    @media (max-width: 768px) {
+                        .types-carousel { padding: 0 32px; }
+                        .type-card {
+                            flex: 0 0 calc(50% - 8px);
+                            padding: 24px 16px;
+                        }
+                    }
+                    @media (max-width: 480px) {
+                        .types-carousel { padding: 0 24px; }
+                        .type-card {
+                            flex: 0 0 100%;
+                            padding: 28px 20px;
+                        }
+                    }
+                </style>
+                <div class="types-carousel">
+                    <button class="carousel-btn prev" onclick="moveCarousel(-1)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <div class="types-track" id="typesTrack">
+                        ${cardsHtml}
+                    </div>
+                    <button class="carousel-btn next" onclick="moveCarousel(1)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            `;
+            initCarousel();
         }
 
         // 轮播控制
@@ -475,11 +415,11 @@
 
         function initCarousel() {
             updateItemsPerView();
-            const track = document.getElementById('dimensionsTrack');
+            const track = document.getElementById('typesTrack');
             const dotsContainer = document.getElementById('carouselDots');
             if (!track || !dotsContainer) return;
             
-            const cards = track.querySelectorAll('.dimension-card');
+            const cards = track.querySelectorAll('.type-card');
             totalSlides = Math.ceil(cards.length / itemsPerView);
             currentSlide = 0;
             
@@ -501,7 +441,6 @@
                 if (oldItemsPerView !== itemsPerView) {
                     totalSlides = Math.ceil(cards.length / itemsPerView);
                     currentSlide = Math.min(currentSlide, totalSlides - 1);
-                    // 重新生成指示点
                     dotsContainer.innerHTML = '';
                     for (let i = 0; i < totalSlides; i++) {
                         const dot = document.createElement('div');
@@ -527,23 +466,21 @@
         }
 
         function updateCarousel() {
-            const track = document.getElementById('dimensionsTrack');
+            const track = document.getElementById('typesTrack');
             const prevBtn = document.querySelector('.carousel-btn.prev');
             const nextBtn = document.querySelector('.carousel-btn.next');
             const dots = document.querySelectorAll('.carousel-dot');
             
             if (!track) return;
             
-            const cardWidth = track.querySelector('.dimension-card')?.offsetWidth || 0;
+            const cardWidth = track.querySelector('.type-card')?.offsetWidth || 0;
             const gap = 16;
             const offset = currentSlide * (cardWidth + gap) * itemsPerView;
             track.style.transform = `translateX(-${offset}px)`;
             
-            // 更新按钮状态
             if (prevBtn) prevBtn.disabled = currentSlide === 0;
             if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
             
-            // 更新指示点
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
@@ -553,6 +490,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             applyUIConfig();
             loadQuizData();
+            
+            // 后台预检测所有平台可用性
+            preloadPlatformChecks();
+            
+            // 检测当前部署平台并记录日志
+            const platform = detectDeployPlatform();
+            console.log('[Deploy] 当前平台:', platform);
+            console.log('[Deploy] 当前URL:', getCurrentDeployUrl());
+            console.log('[Deploy] Cloudflare 优先主站 URL:', getPrimaryDeployUrl());
         });
     </script>
 </body>
