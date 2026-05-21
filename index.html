@@ -10,6 +10,7 @@
     <meta name="keywords" content="心理测试,未来伴侣,伴侣类型,情感测试,性格测试">
     <title>起源研究社 - 你未来对象是什么类型</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" as="image" href="assets/elements/未来伴侣首页.webp?v=5" type="image/webp">
     <script src="js/deploy-config.js"></script>
 </head>
 <body class="page-home">
@@ -28,14 +29,20 @@
         <!-- 首页 Banner（assets/elements/未来伴侣首页.png） -->
         <div class="fade-in" style="margin: 0; text-align: center;">
             <div style="width: 100%; max-width: 1024px; margin: 0 auto; border-radius: 0 0 24px 24px; overflow: hidden; line-height: 0; background: linear-gradient(135deg, #c8e0a8 0%, #77a139 50%, #d4e8b6 100%);">
-                <img src="assets/elements/未来伴侣首页.png?v=4" alt="你未来对象是什么类型？发现你的伴侣偏好密码" style="width: 100%; height: auto; display: block;" loading="eager" fetchpriority="high">
+                <picture>
+                    <source type="image/webp" srcset="assets/elements/未来伴侣首页.webp?v=5">
+                    <img src="assets/elements/未来伴侣首页.png?v=5" alt="你未来对象是什么类型？发现你的伴侣偏好密码" style="width: 100%; height: auto; display: block;" loading="eager" fetchpriority="high" decoding="async">
+                </picture>
             </div>
         </div>
         
         <!-- 开始测试按钮（图片） -->
         <div style="text-align: center; margin: -24px 0 32px; position: relative; z-index: 10;">
             <a href="javascript:void(0)" id="start-btn" onclick="handleStartQuiz()" style="display: inline-block; line-height: 0; cursor: pointer;">
-                <img src="assets/elements/开始测试按钮.png?v=4" alt="开始测试" style="max-width: 320px; width: 78%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 6px 25px rgba(119, 161, 57, 0.4));" loading="eager">
+                <picture>
+                    <source type="image/webp" srcset="assets/elements/开始测试按钮.webp?v=5">
+                    <img src="assets/elements/开始测试按钮.png?v=5" alt="开始测试" style="max-width: 320px; width: 78%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 6px 25px rgba(119, 161, 57, 0.4));" loading="eager" decoding="async">
+                </picture>
             </a>
         </div>
 
@@ -200,8 +207,14 @@
 
         const DIMENSION_ORDER = ['A', 'B', 'C', 'D', 'E'];
 
-        function dimensionPreviewImageUrl(dimensionName) {
-            return 'assets/dimension/' + encodeURIComponent(dimensionName) + '.png?v=4';
+        const DIMENSION_ASSET_VERSION = '5';
+
+        function dimensionPreviewPictureHtml(dimensionName) {
+            const enc = encodeURIComponent(dimensionName);
+            const v = DIMENSION_ASSET_VERSION;
+            const safeAlt = String(dimensionName).replace(/"/g, '&quot;');
+            return '<picture><source type="image/webp" srcset="assets/dimension/' + enc + '.webp?v=' + v + '">' +
+                '<img src="assets/dimension/' + enc + '.png?v=' + v + '" alt="' + safeAlt + '" loading="lazy" decoding="async"></picture>';
         }
 
         // 加载测试数据
@@ -265,11 +278,11 @@
             dims.sort((a, b) => DIMENSION_ORDER.indexOf(a.dimension_id) - DIMENSION_ORDER.indexOf(b.dimension_id));
 
             const cardsHtml = dims.map((dim) => {
-                const imgSrc = dimensionPreviewImageUrl(dim.dimension_name);
+                const pic = dimensionPreviewPictureHtml(dim.dimension_name);
                 return `
                             <div class="type-card">
                                 <div class="type-card-icon" style="background: #f7faf3; box-shadow: 0 4px 14px rgba(0,0,0,0.07), inset 0 0 0 1px rgba(119,161,57,0.1);">
-                                    <img src="${imgSrc}" alt="${dim.dimension_name}" loading="lazy">
+                                    ${pic}
                                 </div>
                                 <h3>${dim.dimension_name}</h3>
                                 <p>${dim.description}</p>

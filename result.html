@@ -237,8 +237,14 @@
                 </button>
             </div>
             <div class="qrcode-container">
-                <img id="qrcode-wechat" class="qrcode-img" src="assets/payment/wechat-qrcode.jpg?v=3" alt="微信支付收款海报">
-                <img id="qrcode-alipay" class="qrcode-img" src="assets/payment/alipay-qrcode.jpg?v=3" alt="支付宝收款海报" style="display:none">
+                <picture id="qrcode-wechat-wrap" class="qrcode-img">
+                    <source srcset="assets/payment/wechat-qrcode.webp?v=5" type="image/webp">
+                    <img id="qrcode-wechat" src="assets/payment/wechat-qrcode.jpg?v=5" alt="微信支付收款海报" loading="lazy" decoding="async">
+                </picture>
+                <picture id="qrcode-alipay-wrap" class="qrcode-img" style="display:none">
+                    <source srcset="assets/payment/alipay-qrcode.webp?v=5" type="image/webp">
+                    <img id="qrcode-alipay" src="assets/payment/alipay-qrcode.jpg?v=5" alt="支付宝收款海报" loading="lazy" decoding="async">
+                </picture>
             </div>
 
             <!-- 长按提示 - 微信 -->
@@ -399,7 +405,7 @@
             'E': '活力社交'
         };
 
-        const ASSET_IMAGE_VERSION = '4';
+        const ASSET_IMAGE_VERSION = '5';
 
         function getPersonaImageSrc(persona) {
             const name = persona && persona.displayName ? String(persona.displayName).trim() : '';
@@ -407,10 +413,22 @@
             return 'assets/persona/' + encodeURIComponent(name) + '.png?v=' + ASSET_IMAGE_VERSION;
         }
 
+        function getPersonaImageWebpSrc(persona) {
+            const name = persona && persona.displayName ? String(persona.displayName).trim() : '';
+            if (!name) return '';
+            return 'assets/persona/' + encodeURIComponent(name) + '.webp?v=' + ASSET_IMAGE_VERSION;
+        }
+
         function getDimensionImageSrc(dimensionFullName) {
             const n = dimensionFullName ? String(dimensionFullName).trim() : '';
             if (!n) return '';
             return 'assets/dimension/' + encodeURIComponent(n) + '.png?v=' + ASSET_IMAGE_VERSION;
+        }
+
+        function getDimensionImageWebpSrc(dimensionFullName) {
+            const n = dimensionFullName ? String(dimensionFullName).trim() : '';
+            if (!n) return '';
+            return 'assets/dimension/' + encodeURIComponent(n) + '.webp?v=' + ASSET_IMAGE_VERSION;
         }
 
         // 计算结果
@@ -541,13 +559,17 @@
                 `<span class="persona-tag">${k}</span>`
             ).join('');
             
-            const imagePath = getPersonaImageSrc(currentPersona);
+            const pngPath = getPersonaImageSrc(currentPersona);
+            const webpPath = getPersonaImageWebpSrc(currentPersona);
             
             container.innerHTML = `
                 <div class="persona-container">
                     <div class="persona-image-wrapper">
-                        <img src="${imagePath}" alt="${currentPersona.displayName || currentPersona.type_name}" class="persona-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div style="display: none; font-size: 4rem; text-align: center; line-height: 1.2;">
+                        <picture>
+                            <source type="image/webp" srcset="${webpPath}">
+                            <img src="${pngPath}" alt="${currentPersona.displayName || currentPersona.type_name}" class="persona-image" loading="eager" fetchpriority="high" decoding="async" onerror="(function(img){var w=img.closest('.persona-image-wrapper');if(w){var f=w.querySelector('.persona-fallback');if(f)f.style.display='flex';var p=img.closest('picture');if(p)p.style.display='none';}})(this)">
+                        </picture>
+                        <div class="persona-fallback" style="display: none; font-size: 4rem; text-align: center; line-height: 1.2;">
                             <div style="font-size: 2.5rem; font-weight: 800; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.15);">${currentPersona.displayName || currentPersona.type_name}</div>
                         </div>
                     </div>
@@ -748,14 +770,18 @@
                 const dim = dimensionScores[key];
                 const isTop = index === 0;
                 const dimLabel = DIMENSION_NAMES[key] || dim.name;
-                const dimImg = getDimensionImageSrc(dim.name);
+                const dimPng = getDimensionImageSrc(dim.name);
+                const dimWebp = getDimensionImageWebpSrc(dim.name);
                 return `
                     <div class="dimension-card" style="${isTop ? 'border-left-width: 6px; background: linear-gradient(to right, #eef6e4, #fff);' : ''}">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div style="position: relative; width: 48px; height: 48px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: linear-gradient(135deg, #77a139, #94b84d); display: flex; align-items: center; justify-content: center;">
                                     <span style="position: absolute; color: white; font-weight: 700; font-size: 1.2rem;">${key}</span>
-                                    <img src="${dimImg}" alt="" width="48" height="48" style="position: relative; width: 48px; height: 48px; object-fit: cover; z-index: 1;" onerror="this.style.display='none'">
+                                    <picture style="position: relative; z-index: 1; width: 48px; height: 48px;">
+                                        <source type="image/webp" srcset="${dimWebp}">
+                                        <img src="${dimPng}" alt="" width="48" height="48" style="width: 48px; height: 48px; object-fit: cover;" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                                    </picture>
                                 </div>
                                 <h3 style="margin: 0; ${isTop ? 'font-size: 1.3rem; color: #5f852c;' : ''}">${dimLabel}</h3>
                             </div>
@@ -940,7 +966,7 @@
                                     
                     <!-- 类型展示区域 -->
                     <div style="background: linear-gradient(135deg, #77a139 0%, #94b84d 100%); border-radius: 16px; padding: 30px; text-align: center; color: white; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        ${pdfPersonaImgSrc ? `<img src="${pdfPersonaImgSrc}" alt="" crossorigin="anonymous" style="max-height: 160px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);" />` : ''}
+                        ${pdfPersonaImgSrc ? `<picture><source type="image/webp" srcset="${getPersonaImageWebpSrc(personaForPdf)}"><img src="${pdfPersonaImgSrc}" alt="" crossorigin="anonymous" style="max-height: 160px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);" /></picture>` : ''}
                         <div style="font-size: 36px; font-weight: 800; margin-bottom: 15px; text-shadow: 0 2px 8px rgba(0,0,0,0.15);">${personaForPdf.displayName || personaForPdf.type_name}</div>
                         <h2 style="font-size: 26px; margin: 0 0 12px; font-weight: 700;">${personaForPdf.type_name}</h2>
                         <div style="margin-bottom: 15px;">
@@ -1023,7 +1049,7 @@
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
                                             <div style="display: flex; align-items: center; gap: 5px;">
                                                 <span style="background: ${rankColor}; color: white; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; flex-shrink: 0;">${idx + 1}</span>
-                                                ${getDimensionImageSrc(dim.name) ? `<img src="${getDimensionImageSrc(dim.name)}" alt="" width="16" height="16" style="width: 16px; height: 16px; object-fit: cover; border-radius: 4px; flex-shrink: 0;" crossorigin="anonymous" />` : ''}
+                                                ${getDimensionImageSrc(dim.name) ? `<picture><source type="image/webp" srcset="${getDimensionImageWebpSrc(dim.name)}"><img src="${getDimensionImageSrc(dim.name)}" alt="" width="16" height="16" style="width: 16px; height: 16px; object-fit: cover; border-radius: 4px; flex-shrink: 0;" crossorigin="anonymous" /></picture>` : ''}
                                                 <span style="font-size: 10px; font-weight: ${isTop || isSecond ? '700' : '600'}; color: ${isTop ? '#5f852c' : isSecond ? '#77a139' : '#333'}; white-space: nowrap;">${dim.name}</span>
                                             </div>
                                             <span style="font-size: 11px; font-weight: 700; color: ${isTop ? '#5f852c' : isSecond ? '#77a139' : '#666'}; flex-shrink: 0;">${Math.round(dim.percentage * 100)}%</span>
@@ -1214,8 +1240,9 @@
             // 设置类型展示 - 渐变占位
             const imageContainer = document.getElementById('poster-persona-image');
             const posterPersonaSrc = getPersonaImageSrc(persona);
+            const posterPersonaWebp = getPersonaImageWebpSrc(persona);
             imageContainer.innerHTML = posterPersonaSrc
-                ? `<div style="padding: 12px 16px 0; text-align: center;"><img src="${posterPersonaSrc}" alt="" crossorigin="anonymous" style="max-height: 220px; width: auto; max-width: 100%; object-fit: contain; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.18);" /></div>`
+                ? `<div style="padding: 12px 16px 0; text-align: center;"><picture><source type="image/webp" srcset="${posterPersonaWebp}"><img src="${posterPersonaSrc}" alt="" crossorigin="anonymous" style="max-height: 220px; width: auto; max-width: 100%; object-fit: contain; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.18);" /></picture></div>`
                 : `<div style="padding: 20px; text-align: center;"><div style="font-size: 2rem; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,0.15);">${persona.displayName || persona.type_name}</div></div>`;
             
             // 设置类型名称
@@ -1480,8 +1507,8 @@
                     document.querySelectorAll('.qrcode-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     const type = this.dataset.tab;
-                    document.getElementById('qrcode-wechat').style.display = type === 'wechat' ? 'block' : 'none';
-                    document.getElementById('qrcode-alipay').style.display = type === 'alipay' ? 'block' : 'none';
+                    document.getElementById('qrcode-wechat-wrap').style.display = type === 'wechat' ? 'block' : 'none';
+                    document.getElementById('qrcode-alipay-wrap').style.display = type === 'alipay' ? 'block' : 'none';
                     document.getElementById('guide-wechat').style.display = type === 'wechat' ? 'block' : 'none';
                     document.getElementById('guide-alipay').style.display = type === 'alipay' ? 'block' : 'none';
                     document.getElementById('hint-wechat').style.display = type === 'wechat' ? 'block' : 'none';
